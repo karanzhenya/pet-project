@@ -1,5 +1,6 @@
 {
   "name": "pet-project",
+  "homepage": "https://karanzhenya.github.io/pet-project",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -26,7 +27,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +52,7 @@
   "devDependencies": {
     "@types/react-redux": "^7.1.22",
     "@types/redux": "^3.6.0",
-    "@types/redux-thunk": "^2.1.0"
+    "@types/redux-thunk": "^2.1.0",
+    "gh-pages": "^3.2.3"
   }
 }
