@@ -1,0 +1,40 @@
+.header {
+    display: flex;
+    width: 500px;
+    align-items: center;
+    position: relative;
+    font-family: Arial, sans-serif;
+    left: 0;
+    animation: visible 1s;
+    transition: .2s;
+    transform: translateX(-282px);
+}
+
+.header:hover {
+    transition: .2s;
+    transform: translateX(0);
+}
+
+.header img {
+    height: 30px;
+    margin-left: 20px;
+}
+
+.header ul {
+    display: flex;
+}
+
+.link {
+    letter-spacing: -1px;
+    list-style: none;
+    margin-left: 8px;
+}
+
+.link a {
+    text-decoration: none;
+    color: #0960b6;
+}
+.link a:hover {
+    text-decoration: underline;
+    color: green;
+}

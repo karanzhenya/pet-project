@@ -1,26 +1,26 @@
 import React from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
-import Common from "./pages/Common";
-import Login from "./pages/Login";
-import Registration from "./pages/Registration";
-import PasswordRecovery from "./pages/PasswordRecovery";
-import NewPassword from "./pages/NewPassword";
-import Profile from "./pages/Profile";
-import Page404 from "./pages/Page404";
+import Login from "./Login/Login";
+import Registration from "./Registration/Registration";
+import PasswordRecovery from "./PasswordRecovery";
+import NewPassword from "./NewPassword";
+import Profile from "./Profile";
+import Page404 from "./Page404/Page404";
+import Common from "./Common";
 
-const PATH = {
+export const PATH = {
     LOGIN: '/login',
     NEW_PASSWORD: '/new-password',
     PASSWORD_RECOVERY: '/password-recovery',
     REGISTRATION: '/registration',
     PAGE_404: '/page404',
-    PROFILE: '/profile'
+    PROFILE: '/profile',
+    COMMON: '/common'
 }
 
-const App = () => {
+const AllRoutes = () => {
     return (
         <>
-            <Common/>
             <Routes>
                 <Route path={'/'} element={<Navigate to={PATH.LOGIN}/>}/>
                 <Route path={PATH.LOGIN} element={<Login/>}/>
@@ -28,6 +28,7 @@ const App = () => {
                 <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery/>}/>
                 <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
                 <Route path={PATH.PROFILE} element={<Profile/>}/>
+                <Route path={PATH.COMMON} element={<Common/>}/>
                 <Route path={PATH.PAGE_404} element={<Page404/>}/>
                 <Route path={'*'} element={<Navigate to={PATH.PAGE_404}/>}/>
             </Routes>
@@ -35,4 +36,4 @@ const App = () => {
     );
 }
 
-export default App;
+export default AllRoutes;

@@ -1,0 +1,22 @@
+.errorPage {
+    position: absolute;
+    top: 0;
+}
+
+.errorPage img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+
+.text {
+    position: absolute;
+    font-size: 75px;
+    top: 100px;
+    height: 50%;
+    color: white;
+}
+.back {
+    position: absolute;
+    color: white;
+}

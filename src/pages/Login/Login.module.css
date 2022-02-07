@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login {
+    padding: 20px 0 0 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 240px;
+}
+
+.login button {
+    margin-top: 15px;
+    width: 100px;
+}
+
+.loading {
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+}
