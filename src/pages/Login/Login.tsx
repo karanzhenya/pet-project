@@ -8,6 +8,7 @@ import s from "./Login.module.css"
 import {RootStateType} from "../../BLL/store";
 import loading from "../files/Шторм.gif"
 import {Link, Navigate} from "react-router-dom";
+import {PATH} from "../AllRoutes";
 
 const Login = () => {
 
@@ -32,7 +33,7 @@ const Login = () => {
         setRememberMe(checked)
     }
     if (isAuth) {
-        return <Navigate to='/profile'/>
+        return <Navigate to={PATH.PROFILE}/>
     }
     return (
         <div className={s.container}>
@@ -40,10 +41,11 @@ const Login = () => {
                 <MyInput placeholder='email' onChangeText={handleEmail}/>
                 <MyInput placeholder='password' type='password' onChangeText={handlePassword}/>
                 <MyCheckbox onChangeChecked={handleRememberMe}>Remember Me</MyCheckbox>
-                <div>
+
                     <MyButton onClick={login}>Log In</MyButton>
-                    <Link to={'/registration'}><MyButton>Register</MyButton></Link>
-                </div>
+                    <Link to={PATH.REGISTRATION}><MyButton>Register</MyButton></Link>
+                    <Link to={PATH.PASSWORD_RECOVERY}><MyButton>Forgot Password?</MyButton></Link>
+
             </div>
             <h1 style={{color: 'red'}}>{error && error}</h1>
             <div className={s.loading}>{isLoading && <img alt={''} src={loading}/>}</div>

@@ -2,11 +2,11 @@ import React from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import Login from "./Login/Login";
 import Registration from "./Registration/Registration";
-import PasswordRecovery from "./PasswordRecovery";
 import NewPassword from "./NewPassword";
 import Profile from "./Profile";
 import Page404 from "./Page404/Page404";
 import Common from "./Common";
+import ForgotPassword from "./ForgotPassword/ForgotPassword";
 
 export const PATH = {
     LOGIN: '/login',
@@ -25,7 +25,7 @@ const AllRoutes = () => {
                 <Route path={'/'} element={<Navigate to={PATH.LOGIN}/>}/>
                 <Route path={PATH.LOGIN} element={<Login/>}/>
                 <Route path={PATH.REGISTRATION} element={<Registration/>}/>
-                <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery/>}/>
+                <Route path={PATH.PASSWORD_RECOVERY} element={<ForgotPassword/>}/>
                 <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
                 <Route path={PATH.PROFILE} element={<Profile/>}/>
                 <Route path={PATH.COMMON} element={<Common/>}/>

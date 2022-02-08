@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../BLL/store";
 import {registerTC} from "../Registration/register-reducer";
 import {Link, Navigate} from "react-router-dom";
+import {PATH} from "../AllRoutes";
 
 const Registration = () => {
 
@@ -27,17 +28,15 @@ const Registration = () => {
         setPassword(password.trim())
     }
     if (isAuth) {
-        return <Navigate to='/profile'/>
+        return <Navigate to={PATH.PROFILE}/>
     }
     return (
         <div className={s.container}>
             <div className={s.register}>
                 <MyInput placeholder='email' onChangeText={handleEmail}/>
                 <MyInput type='password' placeholder='password' onChangeText={handlePassword}/>
-                <div>
                     <MyButton onClick={register}>Register</MyButton>
-                    <Link to={'/login'}><MyButton>Log In</MyButton></Link>
-                </div>
+                    <Link to={PATH.LOGIN}><MyButton>Log In</MyButton></Link>
             </div>
             <h1 style={{color: 'red'}}>{error && error}</h1>
             <div className={s.loading}>{isLoading && <img alt={''} src={loading}/>}</div>

@@ -1,6 +1,6 @@
 import {Dispatch} from "redux"
 import {userApi} from "../../api/userApi";
-import {AuthMeAC, IsLoadingAC, SetErrorAC} from "../../app/app-reducer";
+import {AuthMeAC, IsLoadingAC} from "../../app/app-reducer";
 
 export type UserInitialStateType = {
     _id: string
