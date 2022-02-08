@@ -11,7 +11,7 @@ export type ActionsType =
     | ReturnType<typeof IsLoadingAC>
     | ReturnType<typeof AuthMeAC>
 
-const initialState = {
+const initialState: AppInitialStateType = {
     isLoading: false,
     error: null,
     isAuthorized: false

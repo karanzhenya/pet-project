@@ -1,6 +1,8 @@
 import {Dispatch} from "redux"
 import {userApi} from "../../api/userApi";
 import {IsLoadingAC} from "../../app/app-reducer";
+import {handleServerAppError} from "../../utils/CatchError";
+import {AxiosError} from "axios";
 
 export type ForgotInitialStateType = {
     info: string
@@ -39,10 +41,8 @@ export const forgotPasswordTC = (email: string) => (dispatch: Dispatch) => {
     dispatch(IsLoadingAC(true))
     userApi.forgotPassword(payload).then((res) => {
         dispatch(ForgotPasswordAC(res.data))
-    }).catch((err) => {
-        const error = err.response ? err.response.data.error :
-            (err.message + 'more details about error in the console')
-        dispatch(SetForgotErrorAC(error))
+    }).catch((err: AxiosError) => {
+        handleServerAppError(err, dispatch)
     }).finally(() => {
         dispatch(IsLoadingAC(false))
     })

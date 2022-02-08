@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MyInput from "../../common/Input/MyInput";
 import MyCheckbox from "../../common/Checkbox/MyCheckbox";
 import MyButton from "../../common/Button/MyButton";
@@ -9,6 +9,7 @@ import {RootStateType} from "../../BLL/store";
 import loading from "../files/Шторм.gif"
 import {Link, Navigate} from "react-router-dom";
 import {PATH} from "../AllRoutes";
+import {SetErrorAC} from "../../app/app-reducer";
 
 const Login = () => {
 
@@ -17,9 +18,13 @@ const Login = () => {
     const [rememberMe, setRememberMe] = useState<boolean>(false)
     const dispatch = useDispatch();
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
-    const error = useSelector<RootStateType, string | null>(state => state.login.isError)
+    const error = useSelector<RootStateType, string | null>(state => state.app.error)
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)
 
+
+    useEffect(() => {
+        dispatch(SetErrorAC(''))
+    }, [])
     const login = () => {
         dispatch(loginTC(email, password, rememberMe))
     }
@@ -42,9 +47,9 @@ const Login = () => {
                 <MyInput placeholder='password' type='password' onChangeText={handlePassword}/>
                 <MyCheckbox onChangeChecked={handleRememberMe}>Remember Me</MyCheckbox>
 
-                    <MyButton onClick={login}>Log In</MyButton>
-                    <Link to={PATH.REGISTRATION}><MyButton>Register</MyButton></Link>
-                    <Link to={PATH.PASSWORD_RECOVERY}><MyButton>Forgot Password?</MyButton></Link>
+                <MyButton onClick={login}>Log In</MyButton>
+                <Link to={PATH.REGISTRATION}><MyButton>Register</MyButton></Link>
+                <Link to={PATH.PASSWORD_RECOVERY}><MyButton>Forgot Password?</MyButton></Link>
 
             </div>
             <h1 style={{color: 'red'}}>{error && error}</h1>
