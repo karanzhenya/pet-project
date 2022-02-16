@@ -13,7 +13,10 @@ const Profile = () => {
     if (!isAuth) {
         return <Navigate to={'/login'}/>
     }
-    return <h1>{userProfile.name}</h1>
+    return (
+    <div>
+        <h1>{userProfile.name}</h1>
+    </div>)
 }
 
 export default Profile;

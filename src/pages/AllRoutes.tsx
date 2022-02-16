@@ -9,6 +9,7 @@ import Common from "./Common";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import {useSelector} from "react-redux";
 import {RootStateType} from "../BLL/store";
+import PacksList from "../cards/PacksList";
 
 export const PATH = {
     LOGIN: '/login',
@@ -17,6 +18,7 @@ export const PATH = {
     REGISTRATION: '/registration',
     PAGE_404: '/page404',
     PROFILE: '/profile',
+    PACKS: '/packs',
     COMMON: '/common'
 }
 
@@ -25,12 +27,12 @@ const AllRoutes = () => {
     return (
         <>
             <Routes>
-                <Route path={'/'} element={<Navigate to={PATH.PROFILE}/>}/>
                 <Route path={PATH.LOGIN} element={<Login/>}/>
                 <Route path={PATH.REGISTRATION} element={<Registration/>}/>
                 <Route path={PATH.PASSWORD_RECOVERY} element={<ForgotPassword/>}/>
                 <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
                 <Route path={PATH.PROFILE} element={<Profile/>}/>
+                <Route path={PATH.PACKS} element={<PacksList/>}/>
                 <Route path={PATH.COMMON} element={<Common/>}/>
                 <Route path={PATH.PAGE_404} element={<Page404/>}/>
                 <Route path={'*'} element={<Navigate to={PATH.PAGE_404}/>}/>

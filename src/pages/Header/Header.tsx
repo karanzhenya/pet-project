@@ -19,12 +19,13 @@ function Header() {
 
     const classLink = `${s.link} ${s.activeClassLink}`
     return (
-        <div className={s.header}>
+        <div className={s.
+            header}>
             <ul>
                 <li className={classLink}><Link to={PATH.LOGIN}>Login</Link></li>
                 <li className={classLink}><Link to={PATH.REGISTRATION}>Registration</Link></li>
-                <li className={classLink}><Link to={PATH.NEW_PASSWORD}>New password</Link></li>
                 <li className={classLink}><Link to={PATH.PROFILE}>Profile</Link></li>
+                <li className={classLink}><Link to={PATH.PACKS}>Packs</Link></li>
                 <li className={classLink}><Link to={PATH.COMMON}>Common</Link></li>
             </ul>
             <img alt={''} src={arrow}/>

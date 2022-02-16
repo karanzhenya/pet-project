@@ -7,7 +7,7 @@
     left: 0;
     animation: visible 1s;
     transition: .2s;
-    transform: translateX(-378px);
+    transform: translateX(-328px);
 }
 
 .header:hover {

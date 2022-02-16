@@ -58,7 +58,7 @@ const Login = () => {
 
             </div>
             <h1 style={{color: 'red'}}>{error && error}</h1>
-            <div className={s.loading}>{isLoading && <Preloader/>}</div>
+            <div className={s.loading}>{isLoading && <img alt={''} src={loading}/>}</div>
         </div>
     );
 }
