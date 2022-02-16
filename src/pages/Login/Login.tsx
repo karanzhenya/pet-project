@@ -12,11 +12,10 @@ import {PATH} from "../AllRoutes";
 import {SetErrorAC} from "../../app/app-reducer";
 
 const Login = () => {
-
+    const dispatch = useDispatch();
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [rememberMe, setRememberMe] = useState<boolean>(false)
-    const dispatch = useDispatch();
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
     const error = useSelector<RootStateType, string | null>(state => state.app.error)
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)

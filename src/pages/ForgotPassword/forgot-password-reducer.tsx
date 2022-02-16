@@ -6,18 +6,14 @@ import {AxiosError} from "axios";
 
 export type ForgotInitialStateType = {
     info: string
-    isError?: string
 }
-export type ActionsType = ReturnType<typeof ForgotPasswordAC> | ReturnType<typeof SetForgotErrorAC>
+export type ActionsType = ReturnType<typeof ForgotPasswordAC>
 
 const initialState = {} as ForgotInitialStateType
 export const forgotPasswordReducer = (state: ForgotInitialStateType = initialState, action: ActionsType): ForgotInitialStateType => {
     switch (action.type) {
         case "forgot/FORGOT-PASSWORD": {
             return {...state, info: action.data.info}
-        }
-        case "forgot/SET-FORGOT-ERROR": {
-            return {...state, isError: action.error}
         }
         default:
             return state
@@ -27,10 +23,6 @@ export const forgotPasswordReducer = (state: ForgotInitialStateType = initialSta
 export const ForgotPasswordAC = (data: ForgotInitialStateType) => {
     return ({type: 'forgot/FORGOT-PASSWORD', data} as const)
 }
-export const SetForgotErrorAC = (error: string) => {
-    return ({type: 'forgot/SET-FORGOT-ERROR', error} as const)
-}
-
 export const forgotPasswordTC = (email: string) => (dispatch: Dispatch) => {
     let payload = {
         email,

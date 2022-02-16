@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MyInput from "../../common/Input/MyInput";
 import MyButton from "../../common/Button/MyButton";
 import {useDispatch, useSelector} from "react-redux";
@@ -8,15 +8,16 @@ import loading from "../files/Шторм.gif"
 import {Link} from "react-router-dom";
 import {forgotPasswordTC} from "./forgot-password-reducer";
 import {PATH} from "../AllRoutes";
+import {SetErrorAC} from "../../app/app-reducer";
 
 const ForgotPassword = () => {
 
     const [email, setEmail] = useState<string>('')
     const dispatch = useDispatch();
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
-    const error = useSelector<RootStateType, string | undefined>(state => state.forgot.isError)
+    const error = useSelector<RootStateType, string | null>(state => state.app.error)
     const info = useSelector<RootStateType, string | undefined>(state => state.forgot.info)
-
+    console.log(info)
     const sentPassword = () => {
         dispatch(forgotPasswordTC(email))
         setEmail('')
@@ -24,6 +25,9 @@ const ForgotPassword = () => {
     const handleEmail = (email: string) => {
         setEmail(email.trim())
     }
+    useEffect(() => {
+        dispatch(SetErrorAC(''))
+    }, [])
     return (
         <div className={s.container}>
             <div className={s.forgot}>
