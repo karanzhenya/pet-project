@@ -1,5 +1,5 @@
 import React from 'react'
-import page404 from '../files/page404.jpg'
+import page404 from '../../files/page404.jpg'
 import {Link} from "react-router-dom";
 import {PATH} from "../AllRoutes";
 import s from "./Page404.module.css"

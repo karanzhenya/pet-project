@@ -8,6 +8,8 @@ const Profile = () => {
 
     const userProfile = useSelector<RootStateType, UserInitialStateType>(state => state.login)
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)
+
+
     if (!isAuth) {
         return <Navigate to={'/login'}/>
     }

@@ -1,6 +1,6 @@
 import {Dispatch} from "redux"
 import {userApi} from "../../api/userApi";
-import {AuthMeAC, IsLoadingAC} from "../../app/app-reducer";
+import {authMeAC, isLoadingAC} from "../../app/app-reducer";
 import {handleServerAppError} from "../../utils/CatchError";
 import {AxiosError} from "axios";
 
@@ -18,7 +18,7 @@ export type UserInitialStateType = {
     error?: string
     token: string
 }
-export type ActionsType = ReturnType<typeof LoginAC>
+export type ActionsType = ReturnType<typeof loginAC>
 
 const initialState = {} as UserInitialStateType
 export const loginReducer = (state: UserInitialStateType = initialState, action: ActionsType): UserInitialStateType => {
@@ -33,18 +33,18 @@ export const loginReducer = (state: UserInitialStateType = initialState, action:
     }
 }
 
-export const LoginAC = (data: UserInitialStateType) => {
+export const loginAC = (data: UserInitialStateType) => {
     return ({type: 'login/LOGIN', data} as const)
 }
 
 export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch) => {
-    dispatch(IsLoadingAC(true))
+    dispatch(isLoadingAC(true))
     userApi.login({email, password, rememberMe}).then((res) => {
-        dispatch(LoginAC(res.data))
-        dispatch(AuthMeAC(true))
+        dispatch(loginAC(res.data))
+        dispatch(authMeAC(true))
     }).catch((err: AxiosError) => {
         handleServerAppError(err, dispatch)
     }).finally(() => {
-        dispatch(IsLoadingAC(false))
+        dispatch(isLoadingAC(false))
     })
 }

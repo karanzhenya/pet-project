@@ -14,6 +14,10 @@ type ForgotPayloadType = {
     from: string
     message: string
 }
+type NewPasswordPayloadType = {
+    password: string
+    resetPasswordToken: string
+}
 
 const instance = axios.create({
     baseURL: "https://neko-back.herokuapp.com/2.0",
@@ -23,18 +27,24 @@ const instance = axios.create({
 
 export const userApi = {
     login(payload: LoginPayloadType) {
-        return instance.post(`auth/login`, {...payload})
+        return instance.post(`auth/login`, payload)
     },
     logOut() {
         return instance.delete(`auth/me`, {})
     },
     register(payload: RegisterPayloadType) {
-        return instance.post(`auth/register`, {...payload})
+        return instance.post(`auth/register`, payload)
     },
     authMe() {
         return instance.post(`auth/me`, {})
     },
     forgotPassword(payload: ForgotPayloadType) {
-        return instance.post(`auth/forgot`, {...payload})
+        return instance.post(`auth/forgot`, payload)
+    },
+    setNewPassword(payload: NewPasswordPayloadType) {
+        return instance.post(`auth/set-new-password`, payload)
+    },
+    getCards() {
+        return instance.get(`cards/pack`)
     }
 }

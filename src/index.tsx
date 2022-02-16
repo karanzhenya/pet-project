@@ -7,13 +7,12 @@ import {HashRouter} from "react-router-dom";
 import store from "./BLL/store";
 
 ReactDOM.render(
-    <React.StrictMode>
         <Provider store={store}>
             <HashRouter>
                 <App/>
             </HashRouter>
         </Provider>
-    </React.StrictMode>,
+    ,
     document.getElementById('root')
 );
 

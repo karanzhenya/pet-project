@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {userApi} from "../api/userApi";
-import {LoginAC} from "../pages/Login/login-reducer";
+import {loginAC} from "../pages/Login/login-reducer";
 import {handleServerAppError} from "../utils/CatchError";
 import {AxiosError} from "axios";
 
@@ -10,9 +10,9 @@ export type AppInitialStateType = {
     isAuthorized: boolean
 }
 export type ActionsType =
-    | ReturnType<typeof SetErrorAC>
-    | ReturnType<typeof IsLoadingAC>
-    | ReturnType<typeof AuthMeAC>
+    | ReturnType<typeof setErrorAC>
+    | ReturnType<typeof isLoadingAC>
+    | ReturnType<typeof authMeAC>
 
 const initialState: AppInitialStateType = {
     isLoading: false,
@@ -35,36 +35,35 @@ export const appReducer = (state: AppInitialStateType = initialState, action: Ac
     }
 }
 
-export const SetErrorAC = (error: string) => {
+export const setErrorAC = (error: string) => {
     return ({type: 'app/SET-ERROR', error} as const)
 }
-export const IsLoadingAC = (status: boolean) => {
+export const isLoadingAC = (status: boolean) => {
     return ({type: 'app/IS-LOADING', status} as const)
 }
-export const AuthMeAC = (isAuth: boolean) => {
+export const authMeAC = (isAuth: boolean) => {
     return ({type: 'app/ME', isAuth} as const)
 }
 export const authMeTC = () => (dispatch: Dispatch) => {
-    dispatch(IsLoadingAC(true))
+    dispatch(isLoadingAC(true))
     userApi.authMe().then((res) => {
         console.log(res)
-        dispatch(AuthMeAC(true))
-        dispatch(LoginAC(res.data))
+        dispatch(authMeAC(true))
+        dispatch(loginAC(res.data))
     }).catch((err: AxiosError) => {
-        handleServerAppError(err, dispatch)
+        console.log(err)
     }).finally(() => {
-        dispatch(IsLoadingAC(false))
+        dispatch(isLoadingAC(false))
     })
 }
 
 export const logOutTC = () => (dispatch: Dispatch) => {
-    dispatch(IsLoadingAC(false))
+    dispatch(isLoadingAC(false))
     userApi.logOut().then((res) => {
-        console.log(res)
-        dispatch(AuthMeAC(false))
+        dispatch(authMeAC(false))
     }).catch((err: AxiosError) => {
         handleServerAppError(err, dispatch)
     }).finally(() => {
-        dispatch(IsLoadingAC(false))
+        dispatch(isLoadingAC(false))
     })
 }

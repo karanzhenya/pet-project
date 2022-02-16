@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import s from "../Login/Login.module.css";
 import MyInput from "../../common/Input/MyInput";
 import MyButton from "../../common/Button/MyButton";
-import loading from "../files/Шторм.gif";
+import loading from "../../files/Шторм.gif";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../BLL/store";
 import {registerTC} from "../Registration/register-reducer";
 import {Link, Navigate} from "react-router-dom";
 import {PATH} from "../AllRoutes";
-import {SetErrorAC} from "../../app/app-reducer";
+import {setErrorAC} from "../../app/app-reducer";
 
 const Registration = () => {
 
@@ -20,7 +20,7 @@ const Registration = () => {
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)
 
     useEffect(() => {
-        dispatch(SetErrorAC(''))
+        dispatch(setErrorAC(''))
     }, [])
     const register = () => {
         dispatch(registerTC(email, password))

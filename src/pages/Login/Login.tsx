@@ -6,10 +6,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "./login-reducer";
 import s from "./Login.module.css"
 import {RootStateType} from "../../BLL/store";
-import loading from "../files/Шторм.gif"
+import loading from "../../files/Шторм.gif"
 import {Link, Navigate} from "react-router-dom";
 import {PATH} from "../AllRoutes";
-import {SetErrorAC} from "../../app/app-reducer";
+import {setErrorAC} from "../../app/app-reducer";
+import Preloader from "../../utils/Preloader";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -22,23 +23,27 @@ const Login = () => {
 
 
     useEffect(() => {
-        dispatch(SetErrorAC(''))
+        dispatch(setErrorAC(''))
     }, [])
+
     const login = () => {
         dispatch(loginTC(email, password, rememberMe))
     }
+
     const handleEmail = (email: string) => {
         setEmail(email.trim())
     }
     const handlePassword = (password: string) => {
         setPassword(password.trim())
     }
+
     const handleRememberMe = (checked: boolean) => {
         setRememberMe(checked)
     }
     if (isAuth) {
         return <Navigate to={PATH.PROFILE}/>
     }
+
     return (
         <div className={s.container}>
             <div className={s.login}>
@@ -49,10 +54,11 @@ const Login = () => {
                 <MyButton onClick={login}>Log In</MyButton>
                 <Link to={PATH.REGISTRATION}><MyButton>Register</MyButton></Link>
                 <Link to={PATH.PASSWORD_RECOVERY}><MyButton>Forgot Password?</MyButton></Link>
+                <Link to={PATH.NEW_PASSWORD}><MyButton>Change Password</MyButton></Link>
 
             </div>
             <h1 style={{color: 'red'}}>{error && error}</h1>
-            <div className={s.loading}>{isLoading && <img alt={''} src={loading}/>}</div>
+            <div className={s.loading}>{isLoading && <Preloader/>}</div>
         </div>
     );
 }

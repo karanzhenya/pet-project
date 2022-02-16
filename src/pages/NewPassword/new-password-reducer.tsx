@@ -10,7 +10,7 @@ export type ForgotInitialStateType = {
 export type ActionsType = ReturnType<typeof forgotPasswordAC>
 
 const initialState = {} as ForgotInitialStateType
-export const forgotPasswordReducer = (state: ForgotInitialStateType = initialState, action: ActionsType): ForgotInitialStateType => {
+export const newPasswordReducer = (state: ForgotInitialStateType = initialState, action: ActionsType): ForgotInitialStateType => {
     switch (action.type) {
         case "forgot/FORGOT-PASSWORD": {
             return {...state, info: action.data.info}
@@ -28,7 +28,7 @@ export const forgotPasswordTC = (email: string) => (dispatch: Dispatch) => {
         email,
         from: 'test-front-admin <karanek10@yandex.by>',
         message: `<div style="background-color: lime; padding: 15px">
-        password recovery link: <a href='http://localhost:3000/#/new-password/$token$'>link</a></div>`
+        password recovery link: <a href='http://localhost:3000/#/password-recovery/$token$'>link</a></div>`
     }
     dispatch(isLoadingAC(true))
     userApi.forgotPassword(payload).then((res) => {

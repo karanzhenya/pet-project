@@ -2,15 +2,17 @@ import React from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import Login from "./Login/Login";
 import Registration from "./Registration/Registration";
-import NewPassword from "./NewPassword";
+import NewPassword from "./NewPassword/NewPassword";
 import Profile from "./Profile";
 import Page404 from "./Page404/Page404";
 import Common from "./Common";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
+import {useSelector} from "react-redux";
+import {RootStateType} from "../BLL/store";
 
 export const PATH = {
     LOGIN: '/login',
-    NEW_PASSWORD: '/new-password',
+    NEW_PASSWORD: '/new-password/:token',
     PASSWORD_RECOVERY: '/password-recovery',
     REGISTRATION: '/registration',
     PAGE_404: '/page404',
@@ -19,10 +21,11 @@ export const PATH = {
 }
 
 const AllRoutes = () => {
+
     return (
         <>
             <Routes>
-                <Route path={'/'} element={<Navigate to={PATH.LOGIN}/>}/>
+                <Route path={'/'} element={<Navigate to={PATH.PROFILE}/>}/>
                 <Route path={PATH.LOGIN} element={<Login/>}/>
                 <Route path={PATH.REGISTRATION} element={<Registration/>}/>
                 <Route path={PATH.PASSWORD_RECOVERY} element={<ForgotPassword/>}/>
