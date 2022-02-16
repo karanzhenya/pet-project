@@ -16,13 +16,17 @@ type ForgotPayloadType = {
 }
 
 const instance = axios.create({
-    //baseURL: "https://neko-back.herokuapp.com/2.0"
-    baseURL: "http://localhost:7542/2.0/"
+    baseURL: "https://neko-back.herokuapp.com/2.0",
+    withCredentials: true
+    //baseURL: "http://localhost:7542/2.0/"
 })
 
 export const userApi = {
     login(payload: LoginPayloadType) {
         return instance.post(`auth/login`, {...payload})
+    },
+    logOut() {
+        return instance.delete(`auth/me`, {})
     },
     register(payload: RegisterPayloadType) {
         return instance.post(`auth/register`, {...payload})

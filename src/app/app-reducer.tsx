@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {userApi} from "../api/userApi";
+import {LoginAC} from "../pages/Login/login-reducer";
 
 export type AppInitialStateType = {
     isLoading: boolean
@@ -46,6 +47,21 @@ export const authMeTC = () => (dispatch: Dispatch) => {
     userApi.authMe().then((res) => {
         console.log(res)
         dispatch(AuthMeAC(true))
+        dispatch(LoginAC(res.data))
+    }).catch((err) => {
+        const error = err.response ? err.response.data.error :
+            (err.message + 'more details about error in the console')
+        dispatch(SetErrorAC(error))
+    }).finally(() => {
+        dispatch(IsLoadingAC(false))
+    })
+}
+
+export const logOutTC = () => (dispatch: Dispatch) => {
+    dispatch(IsLoadingAC(false))
+    userApi.logOut().then((res) => {
+        console.log(res)
+        dispatch(AuthMeAC(false))
     }).catch((err) => {
         const error = err.response ? err.response.data.error :
             (err.message + 'more details about error in the console')
