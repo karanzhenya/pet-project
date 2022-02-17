@@ -14,7 +14,7 @@ export const PacksList = () => {
     const packs = useSelector<RootStateType, PacksType>(state => state.packs)
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)
     const [currentPage, setCurrentPage] = useState(1)
-    const [pageCount, setPageCount] = useState(packs.pageCount)
+    const [pageCount, setPageCount] = useState(25)
 
 
     useEffect(() => {
@@ -24,7 +24,6 @@ export const PacksList = () => {
     if (!isAuth) {
         return <Navigate to={PATH.LOGIN}/>
     }
-    debugger
     return (
         <div className={s.container}>
             <div className={s.leftPart}>
@@ -50,6 +49,7 @@ export const PacksList = () => {
                         {packs.cardPacks.map(p => <p key={p._id}>{p.user_id}</p>)}</div>
                 </div>
                 <Pagination pageCount={pageCount}
+                            currentPage={currentPage}
                             setPageCount={setPageCount}
                             cardPacksTotalCount={packs.cardPacksTotalCount}
                             setCurrentPage={setCurrentPage}
