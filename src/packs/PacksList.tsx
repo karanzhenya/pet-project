@@ -6,7 +6,7 @@ import s from './PacksList.module.css'
 import MyButton from "../common/Button/MyButton";
 import MyInput from "../common/Input/MyInput";
 import {PATH} from "../pages/AllRoutes";
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import Pagination from "../common/Pagination/Pagination";
 
 export const PacksList = () => {
@@ -14,13 +14,15 @@ export const PacksList = () => {
     const packs = useSelector<RootStateType, PacksType>(state => state.packs)
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)
     const [currentPage, setCurrentPage] = useState(1)
+    const [pageCount, setPageCount] = useState(packs.pageCount)
+
 
     useEffect(() => {
-        dispatch(getCardsTC(currentPage, 10))
-    }, [])
+        dispatch(getCardsTC(currentPage, pageCount))
+    }, [currentPage, pageCount])
 
     if (!isAuth) {
-     return <Navigate to={PATH.LOGIN}/>
+        return <Navigate to={PATH.LOGIN}/>
     }
     debugger
     return (
@@ -47,9 +49,11 @@ export const PacksList = () => {
                     <div className={s.names}><h3>Created by</h3>
                         {packs.cardPacks.map(p => <p key={p._id}>{p.user_id}</p>)}</div>
                 </div>
-                <Pagination pageCount={packs.pageCount}
+                <Pagination pageCount={pageCount}
+                            setPageCount={setPageCount}
                             cardPacksTotalCount={packs.cardPacksTotalCount}
-                            setCurrentPage={setCurrentPage}/>
+                            setCurrentPage={setCurrentPage}
+                />
             </div>
         </div>
 
