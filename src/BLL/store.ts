@@ -4,7 +4,7 @@ import {appReducer} from "../app/app-reducer";
 import {loginReducer} from "../pages/Login/login-reducer";
 import {registerReducer} from "../pages/Registration/register-reducer";
 import {forgotPasswordReducer} from "../pages/ForgotPassword/forgot-password-reducer";
-import {packsReducer} from "../cards/packs-reducer";
+import {packsReducer} from "../packs/packs-reducer";
 
 const reducers = combineReducers({
     app: appReducer,

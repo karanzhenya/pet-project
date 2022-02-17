@@ -22,7 +22,7 @@ export type PacksType = {
 const initialCardsState = {} as PacksType
 
 
-type ActionsType = ReturnType<typeof getCardsAC>
+type ActionsType = ReturnType<typeof setCardsAC>
 
 export const packsReducer = (state: PacksType = initialCardsState, action: ActionsType) => {
     switch (action.type) {
@@ -36,14 +36,14 @@ export const packsReducer = (state: PacksType = initialCardsState, action: Actio
     }
 }
 
-const getCardsAC = (packs: PacksType) => {
+const setCardsAC = (packs: PacksType) => {
     return ({type: 'GET-CARDS', packs} as const)
 }
 
-export const getCardsTC = () => (dispatch: Dispatch) => {
+export const getCardsTC = (page: number, pageCount: number) => (dispatch: Dispatch) => {
     dispatch(isLoadingAC(true))
-    userApi.getCards().then((res) => {
-        dispatch(getCardsAC(res.data))
+    userApi.getCards(page, pageCount).then((res) => {
+        dispatch(setCardsAC(res.data))
         console.log(res.data)
     })
 }

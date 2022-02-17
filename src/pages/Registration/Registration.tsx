@@ -8,7 +8,7 @@ import {RootStateType} from "../../BLL/store";
 import {registerTC} from "../Registration/register-reducer";
 import {Link, Navigate} from "react-router-dom";
 import {PATH} from "../AllRoutes";
-import {setErrorAC} from "../../app/app-reducer";
+import {isLoadingAC, setErrorAC} from "../../app/app-reducer";
 
 const Registration = () => {
 
@@ -21,6 +21,7 @@ const Registration = () => {
 
     useEffect(() => {
         dispatch(setErrorAC(''))
+        dispatch(isLoadingAC(false))
     }, [])
     const register = () => {
         dispatch(registerTC(email, password))

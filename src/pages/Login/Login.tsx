@@ -9,7 +9,7 @@ import {RootStateType} from "../../BLL/store";
 import loading from "../../files/Шторм.gif"
 import {Link, Navigate} from "react-router-dom";
 import {PATH} from "../AllRoutes";
-import {setErrorAC} from "../../app/app-reducer";
+import {isLoadingAC, setErrorAC} from "../../app/app-reducer";
 import Preloader from "../../utils/Preloader";
 
 const Login = () => {
@@ -24,6 +24,7 @@ const Login = () => {
 
     useEffect(() => {
         dispatch(setErrorAC(''))
+        dispatch(isLoadingAC(false))
     }, [])
 
     const login = () => {

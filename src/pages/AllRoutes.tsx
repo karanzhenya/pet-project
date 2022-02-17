@@ -7,9 +7,8 @@ import Profile from "./Profile";
 import Page404 from "./Page404/Page404";
 import Common from "./Common";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
-import {useSelector} from "react-redux";
-import {RootStateType} from "../BLL/store";
-import PacksList from "../cards/PacksList";
+import PacksList from "../packs/PacksList";
+import Home from "../Home";
 
 export const PATH = {
     LOGIN: '/login',
@@ -27,8 +26,9 @@ const AllRoutes = () => {
     return (
         <>
             <Routes>
-                <Route path={PATH.LOGIN} element={<Login/>}/>
+                <Route path={'/'} element={<Home />}/>
                 <Route path={PATH.REGISTRATION} element={<Registration/>}/>
+                <Route path={PATH.LOGIN} element={<Login/>}/>
                 <Route path={PATH.PASSWORD_RECOVERY} element={<ForgotPassword/>}/>
                 <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
                 <Route path={PATH.PROFILE} element={<Profile/>}/>

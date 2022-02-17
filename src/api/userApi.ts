@@ -44,7 +44,7 @@ export const userApi = {
     setNewPassword(payload: NewPasswordPayloadType) {
         return instance.post(`auth/set-new-password`, payload)
     },
-    getCards() {
-        return instance.get(`cards/pack/?pageCount=10`)
+    getCards(page: number, pageCount: number) {
+        return instance.get(`cards/pack/?page=${page}&pageCount=${pageCount}`)
     }
 }
