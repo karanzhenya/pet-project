@@ -55,7 +55,6 @@ const Login = () => {
                 <MyButton onClick={login}>Log In</MyButton>
                 <Link to={PATH.REGISTRATION}><MyButton>Register</MyButton></Link>
                 <Link to={PATH.PASSWORD_RECOVERY}><MyButton>Forgot Password?</MyButton></Link>
-                <Link to={PATH.NEW_PASSWORD}><MyButton>Change Password</MyButton></Link>
 
             </div>
             <h1 style={{color: 'red'}}>{error && error}</h1>

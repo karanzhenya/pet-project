@@ -1,0 +1,6 @@
+.line {
+    position: absolute;
+    width: 100%;
+    max-width: 1050px;
+    margin-top: 1px;
+}

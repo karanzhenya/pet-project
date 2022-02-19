@@ -8,13 +8,14 @@ import MyInput from "../common/Input/MyInput";
 import {PATH} from "../pages/AllRoutes";
 import {Navigate} from 'react-router-dom';
 import Pagination from "../common/Pagination/Pagination";
+import Pack from "./pack/Pack";
 
 export const PacksList = () => {
     const dispatch = useDispatch()
     const packs = useSelector<RootStateType, PacksType>(state => state.packs)
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)
     const [currentPage, setCurrentPage] = useState(1)
-    const [pageCount, setPageCount] = useState(25)
+    const [pageCount, setPageCount] = useState(20)
 
 
     useEffect(() => {
@@ -38,16 +39,17 @@ export const PacksList = () => {
                     <MyInput/>
                     <MyButton>Add new pack</MyButton>
                 </div>
-                <div className={s.tables}>
-                    <div className={s.names}><h3>Name</h3>
-                        {packs.cardPacks.map(p => <p key={p._id}>{p.name}</p>)}</div>
-                    <div className={s.names}><h3>Cards</h3>
-                        {packs.cardPacks.map(p => <p key={p._id}>{p.cardsCount}</p>)}</div>
-                    <div className={s.names}><h3>Last updated</h3>
-                        {packs.cardPacks.map(p => <p key={p._id}>{p.updated}</p>)}</div>
-                    <div className={s.names}><h3>Created by</h3>
-                        {packs.cardPacks.map(p => <p key={p._id}>{p.user_id}</p>)}</div>
-                </div>
+                <table className={s.table}>
+                    <tr className={s.table_titles}>
+                        <th>Name</th>
+                        <th>Cards</th>
+                        <th>Last updated</th>
+                        <th>Created by</th>
+                    </tr>
+                    {packs.cardPacks.map((cp) => <Pack name={cp.name} cardsCount={cp.cardsCount} updated={cp.updated}
+                                                       user_id={cp.user_id}/>)}
+
+                </table>
                 <Pagination pageCount={pageCount}
                             currentPage={currentPage}
                             setPageCount={setPageCount}
