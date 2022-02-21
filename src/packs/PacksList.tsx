@@ -5,25 +5,31 @@ import {RootStateType} from "../BLL/store";
 import s from './PacksList.module.css'
 import MyButton from "../common/Button/MyButton";
 import MyInput from "../common/Input/MyInput";
-import {PATH} from "../pages/AllRoutes";
-import {Navigate} from 'react-router-dom';
 import Pagination from "../common/Pagination/Pagination";
 import Pack from "./pack/Pack";
+import Preloader from "../utils/Preloader";
+import {isLoadingAC} from "../app/app-reducer";
+import { Navigate } from 'react-router-dom';
+import {UserInitialStateType} from "../pages/Login/login-reducer";
 
 export const PacksList = () => {
     const dispatch = useDispatch()
     const packs = useSelector<RootStateType, PacksType>(state => state.packs)
-    const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)
+    const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
+    const userProfile = useSelector<RootStateType, UserInitialStateType>(state => state.login)
     const [currentPage, setCurrentPage] = useState(1)
     const [pageCount, setPageCount] = useState(20)
-
 
     useEffect(() => {
         dispatch(getCardsTC(currentPage, pageCount))
     }, [currentPage, pageCount])
 
-    if (!isAuth) {
-        return <Navigate to={PATH.LOGIN}/>
+    if (isLoading) {
+        return <Preloader/>
+    }
+
+    if (userProfile.email === '') {
+        return <Navigate to={'/login'}/>
     }
     return (
         <div className={s.container}>
@@ -40,13 +46,18 @@ export const PacksList = () => {
                     <MyButton>Add new pack</MyButton>
                 </div>
                 <table className={s.table}>
-                    <tr className={s.table_titles}>
+                    <tbody className={s.table_titles}>
+                    <tr>
                         <th>Name</th>
                         <th>Cards</th>
                         <th>Last updated</th>
                         <th>Created by</th>
                     </tr>
-                    {packs.cardPacks.map((cp) => <Pack name={cp.name} cardsCount={cp.cardsCount} updated={cp.updated}
+                    </tbody>
+                    {packs.cardPacks.map((cp) => <Pack key={cp._id}
+                                                       name={cp.name}
+                                                       cardsCount={cp.cardsCount}
+                                                       updated={cp.updated}
                                                        user_id={cp.user_id}/>)}
 
                 </table>

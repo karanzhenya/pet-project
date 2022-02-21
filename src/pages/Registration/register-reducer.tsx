@@ -3,20 +3,8 @@ import {userApi} from "../../api/userApi";
 import {isLoadingAC} from "../../app/app-reducer";
 import {handleServerAppError} from "../../utils/CatchError";
 import {AxiosError} from "axios";
+import {UserInitialStateType} from "../Login/login-reducer";
 
-export type UserInitialStateType = {
-    _id: string
-    email: string
-    name: string
-    avatar?: string
-    publicCardPacksCount: number
-    created: Date
-    update: Date
-    isAdmin: boolean
-    verified: boolean
-    rememberMe: boolean
-    error?: string
-}
 export type ActionsType = ReturnType<typeof RegisterAC>
 
 const initialState = {} as UserInitialStateType

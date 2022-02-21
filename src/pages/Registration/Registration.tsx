@@ -17,7 +17,7 @@ const Registration = () => {
     const dispatch = useDispatch();
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
     const error = useSelector<RootStateType, string | null>(state => state.app.error)
-    const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)
+    const userId = useSelector<RootStateType, string>(state => state.login._id)
 
     useEffect(() => {
         dispatch(setErrorAC(''))
@@ -32,8 +32,8 @@ const Registration = () => {
     const handlePassword = (password: string) => {
         setPassword(password.trim())
     }
-    if (isAuth) {
-        return <Navigate to={PATH.PROFILE}/>
+    if (userId) {
+        return <Navigate to={PATH.PACKS} replace/>
     }
     return (
         <div className={s.container}>

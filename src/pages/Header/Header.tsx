@@ -6,15 +6,15 @@ import arrow from "../../files/arrow.png"
 import MyButton from "../../common/Button/MyButton";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../BLL/store";
-import {logOutTC} from "../../app/app-reducer";
+import {loginAC, UserInitialStateType} from "../Login/login-reducer";
 
 
 function Header() {
-    const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)
+    const userId = useSelector<RootStateType, string>(state => state.login._id)
 
     const dispatch = useDispatch()
     const handleLogOut = () => {
-        dispatch(logOutTC())
+        dispatch(loginAC({} as UserInitialStateType))
     }
 
     const classLink = `${s.link} ${s.activeClassLink}`
@@ -29,7 +29,7 @@ function Header() {
                 <li className={classLink}><Link to={PATH.COMMON}>Common</Link></li>
             </ul>
             <img alt={''} src={arrow}/>
-            {isAuth && <MyButton red onClick={handleLogOut}>LogOut</MyButton>}
+            {userId !== undefined && <MyButton red onClick={handleLogOut}>LogOut</MyButton>}
         </div>
     )
 }

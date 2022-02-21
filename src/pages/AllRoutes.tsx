@@ -22,7 +22,6 @@ export const PATH = {
 }
 
 const AllRoutes = () => {
-
     return (
         <>
             <Routes>

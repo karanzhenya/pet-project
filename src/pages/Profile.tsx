@@ -7,16 +7,15 @@ import {Navigate} from 'react-router-dom';
 const Profile = () => {
 
     const userProfile = useSelector<RootStateType, UserInitialStateType>(state => state.login)
-    const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)
 
 
-    if (!isAuth) {
-        return <Navigate to={'/login'}/>
+    if (!userProfile.email) {
+        return <Navigate to={'/login'} replace/>
     }
     return (
-    <div>
-        <h1>{userProfile.name}</h1>
-    </div>)
+        <div>
+            <h1>{userProfile.name}</h1>
+        </div>)
 }
 
 export default Profile;

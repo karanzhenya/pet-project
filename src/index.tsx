@@ -8,9 +8,7 @@ import store from "./BLL/store";
 
 ReactDOM.render(
         <Provider store={store}>
-            <HashRouter>
                 <App/>
-            </HashRouter>
         </Provider>
     ,
     document.getElementById('root')

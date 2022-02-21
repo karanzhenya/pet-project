@@ -13,14 +13,14 @@ import {isLoadingAC, setErrorAC} from "../../app/app-reducer";
 import Preloader from "../../utils/Preloader";
 
 const Login = () => {
-    const dispatch = useDispatch();
+
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [rememberMe, setRememberMe] = useState<boolean>(false)
+    const dispatch = useDispatch();
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
     const error = useSelector<RootStateType, string | null>(state => state.app.error)
-    const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuthorized)
-
+    const userId = useSelector<RootStateType, string>(state => state.login._id)
 
     useEffect(() => {
         dispatch(setErrorAC(''))
@@ -41,8 +41,12 @@ const Login = () => {
     const handleRememberMe = (checked: boolean) => {
         setRememberMe(checked)
     }
-    if (isAuth) {
-        return <Navigate to={PATH.PROFILE}/>
+
+    if (isLoading) {
+        return <Preloader/>
+    }
+    if (userId !== '') {
+        return <Navigate to={PATH.PACKS}/>
     }
 
     return (

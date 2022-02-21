@@ -29,7 +29,7 @@ const Pagination = (props: PaginationPropsType) => {
     // get pages within bounds
     const pagesPortion = pages.filter(p => p >= props.currentPage - 5 && p <= props.currentPage + 5)
     // get pages for rendering
-    const pagesList = pages && pagesPortion.map(p => <span
+    const pagesList = pages && pagesPortion.map(p => <span key={p.toString()}
         className={props.currentPage === p ? s.currentPageButton : s.pageButton}
         onClick={() => getCurrentPagePacks(p)}>{p}</span>)
     // decrease current page by one less
@@ -71,14 +71,14 @@ const Pagination = (props: PaginationPropsType) => {
                 <div className={s.select}>
                     <select value={props.currentPage}
                             onChange={changeCurrentPage}>
-                        {pages.map(p => <option value={p}>{p}</option>)}
+                        {pages.map(p => <option key={p.toString()} value={p}>{p}</option>)}
                     </select>
                 </div>
             </div>
             <div>
                 <select style={{width: "40", marginTop: "10px"}} value={pageCount}
                         onChange={onChangePageCount}>
-                    {pageCountValues.map(v => <option value={v}>{v}</option>)}
+                    {pageCountValues.map(v => <option key={v.toString()} value={v}>{v}</option>)}
                 </select>
             </div>
         </div>
