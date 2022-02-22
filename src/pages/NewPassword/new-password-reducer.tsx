@@ -1,5 +1,5 @@
 import {Dispatch} from "redux"
-import {userApi} from "../../api/userApi";
+import {authApi} from "../../api/authApi";
 import {isLoadingAC} from "../../app/app-reducer";
 import {handleServerAppError} from "../../utils/CatchError";
 import {AxiosError} from "axios";
@@ -31,7 +31,7 @@ export const forgotPasswordTC = (email: string) => (dispatch: Dispatch) => {
         password recovery link: <a href='http://localhost:3000/#/password-recovery/$token$'>link</a></div>`
     }
     dispatch(isLoadingAC(true))
-    userApi.forgotPassword(payload).then((res) => {
+    authApi.forgotPassword(payload).then((res) => {
         dispatch(forgotPasswordAC(res.data))
     }).catch((err: AxiosError) => {
         handleServerAppError(err, dispatch)

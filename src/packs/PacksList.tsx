@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {getCardsTC, PacksType} from "./packs-reducer";
+import React, {useEffect} from 'react';
+import {deletePackTC, getPacksTC, PacksType, postPackTC} from "./packs-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../BLL/store";
 import s from './PacksList.module.css'
@@ -17,13 +17,20 @@ export const PacksList = () => {
     const packs = useSelector<RootStateType, PacksType>(state => state.packs)
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuth)
-    const [currentPage, setCurrentPage] = useState(1)
-    const [pageCount, setPageCount] = useState(20)
+    const currentPage = useSelector<RootStateType, number>(state => state.packs.page)
+    const pageCount = useSelector<RootStateType, number>(state => state.packs.pageCount)
 
     useEffect(() => {
-        dispatch(getCardsTC(currentPage, pageCount))
+        dispatch(getPacksTC())
     }, [currentPage, pageCount])
 
+    const handleAddNewPack = () => {
+        const name = 'zhenya'
+        dispatch(postPackTC({name}))
+    }
+    const handleDeletePack = (id: string) => {
+        dispatch(deletePackTC(id))
+    }
     if (isLoading) {
         return <Preloader/>
     }
@@ -38,7 +45,7 @@ export const PacksList = () => {
                 <h1>Packs list</h1>
                 <div className={s.rightTopPart}>
                     <MyInput/>
-                    <MyButton>Add new pack</MyButton>
+                    <MyButton onClick={handleAddNewPack}>Add new pack</MyButton>
                 </div>
                 <table className={s.table}>
                     <tbody className={s.table_titles}>
@@ -53,14 +60,14 @@ export const PacksList = () => {
                                                        name={cp.name}
                                                        cardsCount={cp.cardsCount}
                                                        updated={cp.updated}
-                                                       user_id={cp.user_id}/>)}
+                                                       user_id={cp.user_id}
+                                                       id={cp._id}
+                                                       deletePack={handleDeletePack}/>)}
 
                 </table>
                 <Pagination pageCount={pageCount}
                             currentPage={currentPage}
-                            setPageCount={setPageCount}
                             cardPacksTotalCount={packs.cardPacksTotalCount}
-                            setCurrentPage={setCurrentPage}
                 />
             </div>
         </div>

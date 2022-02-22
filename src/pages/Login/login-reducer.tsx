@@ -1,5 +1,5 @@
 import {Dispatch} from "redux"
-import {userApi} from "../../api/userApi";
+import {authApi} from "../../api/authApi";
 import {isAuthAC, isLoadingAC} from "../../app/app-reducer";
 import {handleServerAppError} from "../../utils/CatchError";
 import {AxiosError, AxiosResponse} from "axios";
@@ -66,7 +66,7 @@ export const chekMeAC = (data: UserInitialStateType) => {
 
 export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch) => {
     dispatch(isLoadingAC(true))
-    userApi.login({email, password, rememberMe}).then((res) => {
+    authApi.login({email, password, rememberMe}).then((res) => {
         dispatch(loginAC(res.data))
         dispatch(isAuthAC(true))
     }).catch((err: AxiosError) => {
@@ -77,7 +77,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
 }
 
 export const authMeTC = () => (dispatch: Dispatch) => {
-    userApi.authMe().then((res: AxiosResponse<UserInitialStateType>) => {
+    authApi.authMe().then((res: AxiosResponse<UserInitialStateType>) => {
         dispatch(chekMeAC(res.data))
         dispatch(isAuthAC(true))
     }).catch((err: AxiosError) => {
@@ -89,7 +89,7 @@ export const authMeTC = () => (dispatch: Dispatch) => {
 
 export const logOutTC = () => (dispatch: Dispatch) => {
     dispatch(isLoadingAC(true))
-    userApi.logOut().then(() => {
+    authApi.logOut().then(() => {
         dispatch(loginAC({} as UserInitialStateType))
         dispatch(isAuthAC(false))
     }).catch((err: AxiosError) => {

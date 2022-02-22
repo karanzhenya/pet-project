@@ -1,5 +1,5 @@
 import {Dispatch} from "redux"
-import {userApi} from "../../api/userApi";
+import {authApi} from "../../api/authApi";
 import {isLoadingAC} from "../../app/app-reducer";
 import {handleServerAppError} from "../../utils/CatchError";
 import {AxiosError} from "axios";
@@ -21,8 +21,7 @@ export const RegisterAC = () => {
 
 export const registerTC = (email: string, password: string) => (dispatch: Dispatch) => {
     dispatch(isLoadingAC(true))
-    userApi.register({email, password}).then((res) => {
-
+    authApi.register({email, password}).then(() => {
     }).catch((err: AxiosError) => {
         handleServerAppError(err, dispatch)
     }).finally(() => {
