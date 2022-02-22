@@ -7,12 +7,18 @@ type PackPropsType = {
     updated: string
     user_id: string
     id: string
+    isLoading: boolean
     deletePack: (id: string) => void
+    updatePack: (id: string) => void
 }
 
-const Pack = ({name, cardsCount, updated, user_id, id, deletePack}: PackPropsType) => {
+const Pack = ({name, cardsCount, updated, user_id, id, isLoading, updatePack, deletePack}: PackPropsType) => {
+
     const handleDeletePack = () => {
         deletePack(id)
+    }
+    const handleUpdatePack = () => {
+        updatePack(id)
     }
     return (
         <>
@@ -24,7 +30,8 @@ const Pack = ({name, cardsCount, updated, user_id, id, deletePack}: PackPropsTyp
                 <td>{user_id}</td>
             </tr>
             </tbody>
-            <MyButton onClick={handleDeletePack}>Delete</MyButton>
+            <MyButton disabled={isLoading} style={{width: "20"}} red onClick={handleDeletePack}>X</MyButton>
+            <MyButton disabled={isLoading} onClick={handleUpdatePack}>Update</MyButton>
         </>
     );
 }

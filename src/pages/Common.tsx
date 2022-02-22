@@ -6,7 +6,7 @@ import MyCheckbox from "../common/Checkbox/MyCheckbox";
 const Common = () => {
     return (
         <div>
-            <MyButton red>button</MyButton>
+            <MyButton red disabled={true}>button</MyButton>
             <MyInput error={'error'}/>
             <MyCheckbox/>
         </div>

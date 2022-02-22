@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {deletePackTC, getPacksTC, PacksType, postPackTC} from "./packs-reducer";
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
+import {deletePackTC, getPacksTC, PacksType, postPackTC, setSearchValueAC, updatePackTC} from "./packs-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../BLL/store";
 import s from './PacksList.module.css'
@@ -11,6 +11,7 @@ import Preloader from "../utils/Preloader";
 import {Navigate} from 'react-router-dom';
 import ConfigurationPanel from "./ConfigurationPanel/ConfigurationPanel";
 import {PATH} from "../pages/AllRoutes";
+import {debounce} from "../common/debounce";
 
 export const PacksList = () => {
     const dispatch = useDispatch()
@@ -19,18 +20,45 @@ export const PacksList = () => {
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuth)
     const currentPage = useSelector<RootStateType, number>(state => state.packs.page)
     const pageCount = useSelector<RootStateType, number>(state => state.packs.pageCount)
+    const [searchValue, setSearchValue] = useState<string>('')
 
     useEffect(() => {
         dispatch(getPacksTC())
-    }, [currentPage, pageCount])
+    }, [currentPage, pageCount, searchValue])
 
-    const handleAddNewPack = () => {
+    const addNewPack = () => {
         const name = 'zhenya'
         dispatch(postPackTC({name}))
     }
-    const handleDeletePack = (id: string) => {
+    const deletePack = (id: string) => {
         dispatch(deletePackTC(id))
     }
+    const updatePack = (id: string) => {
+        const cardsPack = {
+            name: 'not zhenya now',
+            _id: id
+        }
+        dispatch(updatePackTC(cardsPack))
+    }
+
+    /*const debounce = (fn: Function) => {
+        let timer: any = null;
+        return function (...args: any) {
+            // @ts-ignore
+            const context = this;
+            timer && clearTimeout(timer);
+            timer = setTimeout(() => {
+                fn.apply(context, args);
+            }, 300);
+        };
+    }*/
+    const onChangeSearchValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(e.currentTarget.value)
+        dispatch(setSearchValueAC(e.currentTarget.value))
+    }
+    /* const debouncedCallback = useMemo(() => debounce(onChangeSearchValue), [])*/
+
+
     if (isLoading) {
         return <Preloader/>
     }
@@ -44,8 +72,8 @@ export const PacksList = () => {
             <div className={s.rightPart}>
                 <h1>Packs list</h1>
                 <div className={s.rightTopPart}>
-                    <MyInput/>
-                    <MyButton onClick={handleAddNewPack}>Add new pack</MyButton>
+                    <MyInput name={'search'} onChange={onChangeSearchValue}/>{searchValue}
+                    <MyButton disabled={isLoading} onClick={addNewPack}>Add new pack</MyButton>
                 </div>
                 <table className={s.table}>
                     <tbody className={s.table_titles}>
@@ -62,7 +90,9 @@ export const PacksList = () => {
                                                        updated={cp.updated}
                                                        user_id={cp.user_id}
                                                        id={cp._id}
-                                                       deletePack={handleDeletePack}/>)}
+                                                       isLoading={isLoading}
+                                                       updatePack={updatePack}
+                                                       deletePack={deletePack}/>)}
 
                 </table>
                 <Pagination pageCount={pageCount}
