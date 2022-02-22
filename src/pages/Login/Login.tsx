@@ -6,11 +6,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "./login-reducer";
 import s from "./Login.module.css"
 import {RootStateType} from "../../BLL/store";
-import loading from "../../files/Шторм.gif"
 import {Link, Navigate} from "react-router-dom";
 import {PATH} from "../AllRoutes";
 import {isLoadingAC, setErrorAC} from "../../app/app-reducer";
 import Preloader from "../../utils/Preloader";
+import ErrorLoading from "../../common/ErrorLoading/ErrorLoading";
 
 const Login = () => {
 
@@ -19,8 +19,8 @@ const Login = () => {
     const [rememberMe, setRememberMe] = useState<boolean>(false)
     const dispatch = useDispatch();
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
+    const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuth)
     const error = useSelector<RootStateType, string | null>(state => state.app.error)
-    const userId = useSelector<RootStateType, string>(state => state.login._id)
 
     useEffect(() => {
         dispatch(setErrorAC(''))
@@ -45,7 +45,7 @@ const Login = () => {
     if (isLoading) {
         return <Preloader/>
     }
-    if (userId !== '') {
+    if (isAuth) {
         return <Navigate to={PATH.PACKS}/>
     }
 
@@ -61,8 +61,7 @@ const Login = () => {
                 <Link to={PATH.PASSWORD_RECOVERY}><MyButton>Forgot Password?</MyButton></Link>
 
             </div>
-            <h1 style={{color: 'red'}}>{error && error}</h1>
-            <div className={s.loading}>{isLoading && <img alt={''} src={loading}/>}</div>
+            <ErrorLoading error={error} isLoading={isLoading}/>
         </div>
     );
 }

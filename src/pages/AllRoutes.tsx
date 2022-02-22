@@ -8,7 +8,6 @@ import Page404 from "./Page404/Page404";
 import Common from "./Common";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import PacksList from "../packs/PacksList";
-import Home from "../Home";
 
 export const PATH = {
     LOGIN: '/login',
@@ -25,7 +24,7 @@ const AllRoutes = () => {
     return (
         <>
             <Routes>
-                <Route path={'/'} element={<Home />}/>
+                <Route path={'/'} element={<PacksList/>}/>
                 <Route path={PATH.REGISTRATION} element={<Registration/>}/>
                 <Route path={PATH.LOGIN} element={<Login/>}/>
                 <Route path={PATH.PASSWORD_RECOVERY} element={<ForgotPassword/>}/>

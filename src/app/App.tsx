@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import AllRoutes from "../pages/AllRoutes";
 import Header from "../pages/Header/Header";
 import {useDispatch, useSelector} from "react-redux";
-import {isLoadingAC} from "./app-reducer";
 import {RootStateType} from "../BLL/store";
 import Preloader from "../utils/Preloader";
 import {authMeTC} from "../pages/Login/login-reducer";
@@ -12,7 +11,7 @@ const App = () => {
     const dispatch = useDispatch();
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
     useEffect(() => {
-        dispatch(authMeTC({}))
+        dispatch(authMeTC())
     }, [])
     if (isLoading) {
         return <Preloader/>

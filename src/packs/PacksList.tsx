@@ -8,15 +8,15 @@ import MyInput from "../common/Input/MyInput";
 import Pagination from "../common/Pagination/Pagination";
 import Pack from "./pack/Pack";
 import Preloader from "../utils/Preloader";
-import {isLoadingAC} from "../app/app-reducer";
-import { Navigate } from 'react-router-dom';
-import {UserInitialStateType} from "../pages/Login/login-reducer";
+import {Navigate} from 'react-router-dom';
+import ConfigurationPanel from "./ConfigurationPanel/ConfigurationPanel";
+import {PATH} from "../pages/AllRoutes";
 
 export const PacksList = () => {
     const dispatch = useDispatch()
     const packs = useSelector<RootStateType, PacksType>(state => state.packs)
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
-    const userProfile = useSelector<RootStateType, UserInitialStateType>(state => state.login)
+    const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuth)
     const [currentPage, setCurrentPage] = useState(1)
     const [pageCount, setPageCount] = useState(20)
 
@@ -28,17 +28,12 @@ export const PacksList = () => {
         return <Preloader/>
     }
 
-    if (userProfile.email === '') {
-        return <Navigate to={'/login'}/>
+    if (!isAuth) {
+        return <Navigate to={PATH.LOGIN}/>
     }
     return (
         <div className={s.container}>
-            <div className={s.leftPart}>
-                Show packs cards
-                <div className={s.buttonContainer}><MyButton>My</MyButton><MyButton>All</MyButton></div>
-                Number of cards
-                <input type={"range"}/>
-            </div>
+            <ConfigurationPanel/>
             <div className={s.rightPart}>
                 <h1>Packs list</h1>
                 <div className={s.rightTopPart}>

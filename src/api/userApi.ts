@@ -35,8 +35,8 @@ export const userApi = {
     register(payload: RegisterPayloadType) {
         return instance.post(`auth/register`, payload)
     },
-    authMe(payload: {}) {
-        return instance.post(`auth/me`, payload)
+    authMe() {
+        return instance.post(`auth/me`, {})
     },
     forgotPassword(payload: ForgotPayloadType) {
         return instance.post(`auth/forgot`, payload)

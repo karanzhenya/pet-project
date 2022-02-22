@@ -3,7 +3,7 @@ import {isLoadingAC} from "../app/app-reducer";
 import {userApi} from "../api/userApi";
 import {handleServerAppError} from "../utils/CatchError";
 import {AxiosError} from "axios";
-import {AppThunkType, RootActionsType} from "../BLL/store";
+import {RootActionsType} from "../BLL/store";
 
 export type CardType = {
     cardsCount: number
@@ -70,20 +70,3 @@ export const getCardsTC = (page: number, pageCount: number) => (dispatch: Dispat
             dispatch(isLoadingAC(false))
         })
 }
-
-/*export const getCardsTC = (page: number, pageCount: number): AppThunkType => (dispatch) => {
-    userApi.authMe({}).then(() => {
-        userApi.getCards(page, pageCount).then((res) => {
-            dispatch(setCardsAC(res.data))
-        })
-            .catch((err: AxiosError) => {
-                handleServerAppError(err, dispatch)
-            })
-    })
-        .catch((err: AxiosError) => {
-            handleServerAppError(err, dispatch)
-        })
-        .finally(() => {
-            dispatch(isLoadingAC(false))
-        })
-}*/
