@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {ChangeEvent, useCallback, useEffect} from 'react';
 import {deletePackTC, getPacksTC, PacksType, postPackTC, setSearchValueAC, updatePackTC} from "./packs-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../BLL/store";
@@ -11,16 +11,16 @@ import Preloader from "../utils/Preloader";
 import {Navigate} from 'react-router-dom';
 import ConfigurationPanel from "./ConfigurationPanel/ConfigurationPanel";
 import {PATH} from "../pages/AllRoutes";
-import {debounce} from "../common/debounce";
+import debounce from "lodash.debounce";
 
 export const PacksList = () => {
     const dispatch = useDispatch()
     const packs = useSelector<RootStateType, PacksType>(state => state.packs)
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuth)
+    const searchValue = useSelector<RootStateType, string>(state => state.packs.searchValue)
     const currentPage = useSelector<RootStateType, number>(state => state.packs.page)
     const pageCount = useSelector<RootStateType, number>(state => state.packs.pageCount)
-    const [searchValue, setSearchValue] = useState<string>('')
 
     useEffect(() => {
         dispatch(getPacksTC())
@@ -41,23 +41,10 @@ export const PacksList = () => {
         dispatch(updatePackTC(cardsPack))
     }
 
-    /*const debounce = (fn: Function) => {
-        let timer: any = null;
-        return function (...args: any) {
-            // @ts-ignore
-            const context = this;
-            timer && clearTimeout(timer);
-            timer = setTimeout(() => {
-                fn.apply(context, args);
-            }, 300);
-        };
-    }*/
     const onChangeSearchValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(e.currentTarget.value)
-        dispatch(setSearchValueAC(e.currentTarget.value))
+        dispatch(setSearchValueAC(e.target.value))
     }
-    /* const debouncedCallback = useMemo(() => debounce(onChangeSearchValue), [])*/
-
+    const debouncedChangeHandler = useCallback(debounce(onChangeSearchValue, 400), []);
 
     if (isLoading) {
         return <Preloader/>
@@ -72,7 +59,7 @@ export const PacksList = () => {
             <div className={s.rightPart}>
                 <h1>Packs list</h1>
                 <div className={s.rightTopPart}>
-                    <MyInput name={'search'} onChange={onChangeSearchValue}/>{searchValue}
+                    <MyInput name={'search'} onChange={debouncedChangeHandler}/>{searchValue}
                     <MyButton disabled={isLoading} onClick={addNewPack}>Add new pack</MyButton>
                 </div>
                 <table className={s.table}>

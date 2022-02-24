@@ -10,6 +10,7 @@ import {HashRouter} from "react-router-dom";
 const App = () => {
     const dispatch = useDispatch();
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
+
     useEffect(() => {
         dispatch(authMeTC())
     }, [])

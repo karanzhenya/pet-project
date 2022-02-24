@@ -20,7 +20,6 @@ export const packsApi = {
         return instance.delete(`cards/pack?id=${id}`)
     },
     updatePack(cardsPack: UpdatePackPayloadType) {
-        debugger
         return instance.put(`cards/pack`, {cardsPack})
     }
 }
