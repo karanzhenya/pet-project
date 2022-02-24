@@ -30,6 +30,7 @@ export type PacksType = {
     page: number
     pageCount: number
     searchValue: string
+    isMine: boolean
 }
 
 const initialCardsState: PacksType = {
@@ -39,7 +40,8 @@ const initialCardsState: PacksType = {
     minCardsCount: 0,
     page: 1,
     pageCount: 20,
-    searchValue: ''
+    searchValue: '',
+    isMine: false
 }
 
 
@@ -48,6 +50,7 @@ export type PacksActionsType =
     | ReturnType<typeof setCurrentPageAC>
     | ReturnType<typeof setPageCountAC>
     | ReturnType<typeof setSearchValueAC>
+    | ReturnType<typeof changeisMineStatusAC>
 
 export const packsReducer = (state: PacksType = initialCardsState, action: PacksActionsType) => {
     switch (action.type) {
@@ -62,6 +65,9 @@ export const packsReducer = (state: PacksType = initialCardsState, action: Packs
         }
         case "packs/SET-SEARCH-VALUE": {
             return {...state, searchValue: action.searchName}
+        }
+        case "packs/CHANGE-ISMINE-STATUS": {
+            return {...state, isMine: action.status}
         }
         default:
             return state
@@ -80,12 +86,15 @@ export const setPageCountAC = (pageCount: number) => {
 export const setSearchValueAC = (searchName: string) => {
     return ({type: 'packs/SET-SEARCH-VALUE', searchName} as const)
 }
+export const changeisMineStatusAC = (status: boolean) => {
+    return ({type: 'packs/CHANGE-ISMINE-STATUS', status} as const)
+}
 
-export const getPacksTC = () => (dispatch: Dispatch<RootActionsType>, getState: () => RootStateType) => {
+export const getPacksTC = (id?: string) => (dispatch: Dispatch<RootActionsType>, getState: () => RootStateType) => {
     const page = getState().packs.page
     const pageCount = getState().packs.pageCount
     const searchName = getState().packs.searchValue
-    packsApi.getCards(page, pageCount, searchName).then((res) => {
+    packsApi.getCards(page, pageCount, searchName, id).then((res) => {
         dispatch(setCardsAC(res.data))
     })
         .catch((err: AxiosError) => {

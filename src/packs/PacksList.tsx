@@ -1,5 +1,13 @@
-import React, {ChangeEvent, useCallback, useEffect} from 'react';
-import {deletePackTC, getPacksTC, PacksType, postPackTC, setSearchValueAC, updatePackTC} from "./packs-reducer";
+import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
+import {
+    changeisMineStatusAC,
+    deletePackTC,
+    getPacksTC,
+    PacksType,
+    postPackTC,
+    setSearchValueAC,
+    updatePackTC
+} from "./packs-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../BLL/store";
 import s from './PacksList.module.css'
@@ -12,18 +20,21 @@ import {Navigate} from 'react-router-dom';
 import ConfigurationPanel from "./ConfigurationPanel/ConfigurationPanel";
 import {PATH} from "../pages/AllRoutes";
 import debounce from "lodash.debounce";
+import MyCheckbox from "../common/Checkbox/MyCheckbox";
 
 export const PacksList = () => {
     const dispatch = useDispatch()
     const packs = useSelector<RootStateType, PacksType>(state => state.packs)
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuth)
+
     const searchValue = useSelector<RootStateType, string>(state => state.packs.searchValue)
     const currentPage = useSelector<RootStateType, number>(state => state.packs.page)
     const pageCount = useSelector<RootStateType, number>(state => state.packs.pageCount)
-
+    const userId = ''
     useEffect(() => {
-        dispatch(getPacksTC())
+
+        dispatch(getPacksTC(userId))
     }, [currentPage, pageCount, searchValue])
 
     const addNewPack = () => {
@@ -44,7 +55,7 @@ export const PacksList = () => {
     const onChangeSearchValue = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setSearchValueAC(e.target.value))
     }
-    const debouncedChangeHandler = useCallback(debounce(onChangeSearchValue, 400), []);
+    const debouncedChangeHandler = useCallback(debounce(onChangeSearchValue, 400), [searchValue]);
 
     if (isLoading) {
         return <Preloader/>
@@ -59,7 +70,7 @@ export const PacksList = () => {
             <div className={s.rightPart}>
                 <h1>Packs list</h1>
                 <div className={s.rightTopPart}>
-                    <MyInput name={'search'} onChange={debouncedChangeHandler}/>{searchValue}
+                    <MyInput name={'search'} onChange={debouncedChangeHandler}/>
                     <MyButton disabled={isLoading} onClick={addNewPack}>Add new pack</MyButton>
                 </div>
                 <table className={s.table}>
