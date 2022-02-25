@@ -58,3 +58,12 @@
     top: -10px;
     right: 35px;
 }
+.description a {
+    text-decoration: none;
+}
+.modalWindow {
+    display: flex;
+}
+.modalWindow button {
+    margin-left: 30px;
+}

@@ -13,7 +13,6 @@ type PaginationPropsType = {
 
 
 const Pagination = (props: PaginationPropsType) => {
-    debugger
     const dispatch = useDispatch()
     const pageCountValues = [5, 10, 20, 50]
 

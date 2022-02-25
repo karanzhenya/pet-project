@@ -1,6 +1,9 @@
 import React from 'react';
 import MyButton from "../../common/Button/MyButton";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {RootStateType} from "../../BLL/store";
+import s from '../PacksList.module.css'
 
 type PackPropsType = {
     name: string
@@ -15,6 +18,8 @@ type PackPropsType = {
 
 const Pack = ({name, cardsCount, updated, user_id, id, isLoading, updatePack, deletePack}: PackPropsType) => {
 
+    const myId = useSelector<RootStateType, string>(state => state.login._id)
+
     const handleDeletePack = () => {
         deletePack(id)
     }
@@ -24,15 +29,16 @@ const Pack = ({name, cardsCount, updated, user_id, id, isLoading, updatePack, de
     return (
         <>
             <tbody>
-            <tr>
+            <tr className={s.description}>
                 <Link to={`cards/${id}`}><td>{name}</td></Link>
                 <td>{cardsCount}</td>
                 <td>{updated}</td>
                 <td>{user_id}</td>
             </tr>
             </tbody>
-            <MyButton disabled={isLoading} style={{width: "20"}} red onClick={handleDeletePack}>X</MyButton>
-            <MyButton disabled={isLoading} onClick={handleUpdatePack}>Update</MyButton>
+            <div>{myId === user_id && <div><button disabled={isLoading} style={{width: "20"}} onClick={handleDeletePack}>X</button>
+                <button disabled={isLoading} onClick={handleUpdatePack}>Update</button></div>}</div>
+
         </>
     );
 }

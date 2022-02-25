@@ -107,7 +107,7 @@ export const getPacksTC = (id?: string) => (dispatch: Dispatch<RootActionsType>,
 export const postPackTC = (cardsPack: PostPackPayloadType): AppThunkType => (dispatch) => {
     isLoadingAC(true)
     packsApi.postPack(cardsPack).then(() => {
-        dispatch(getPacksTC())
+        dispatch(getPacksTC(''))
     })
         .catch((err: AxiosError) => {
             handleServerAppError(err, dispatch)
@@ -119,7 +119,8 @@ export const postPackTC = (cardsPack: PostPackPayloadType): AppThunkType => (dis
 export const deletePackTC = (id: string): AppThunkType => (dispatch) => {
     isLoadingAC(true)
     packsApi.deletePack(id).then(() => {
-        dispatch(getPacksTC())
+        dispatch(getPacksTC(''))
+        dispatch(setCurrentPageAC(1))
     })
         .catch((err: AxiosError) => {
             handleServerAppError(err, dispatch)
@@ -131,7 +132,7 @@ export const deletePackTC = (id: string): AppThunkType => (dispatch) => {
 export const updatePackTC = (cardsPack: UpdatePackPayloadType): AppThunkType => (dispatch) => {
     isLoadingAC(true)
     packsApi.updatePack(cardsPack).then(() => {
-        dispatch(getPacksTC())
+        dispatch(getPacksTC(''))
     })
         .catch((err: AxiosError) => {
             handleServerAppError(err, dispatch)

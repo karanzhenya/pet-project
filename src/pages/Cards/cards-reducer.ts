@@ -2,8 +2,8 @@ import {Dispatch} from "redux";
 import {isLoadingAC} from "../../app/app-reducer";
 import {handleServerAppError} from "../../utils/CatchError";
 import {AxiosError} from "axios";
-import {RootActionsType, RootStateType} from "../../BLL/store";
-import {cardsApi} from "../../api/cardsApi";
+import {AppThunkType, RootActionsType, RootStateType} from "../../BLL/store";
+import {cardsApi, PostNewCard} from "../../api/cardsApi";
 
 export type CardType = {
     answer: string
@@ -93,11 +93,11 @@ export const getCardsTC = (id?: string) => (dispatch: Dispatch<RootActionsType>,
         .finally(() => {
             dispatch(isLoadingAC(false))
         })
-}/*
-export const postPackTC = (cardsPack: PostPackPayloadType): AppThunkType => (dispatch) => {
+}
+export const postCardTC = (newCard: PostNewCard): AppThunkType => (dispatch) => {
     isLoadingAC(true)
-    packsApi.postPack(cardsPack).then(() => {
-        dispatch(getPacksTC())
+    cardsApi.addNewCard(newCard).then(() => {
+        dispatch(getCardsTC(newCard.cardsPack_id))
     })
         .catch((err: AxiosError) => {
             handleServerAppError(err, dispatch)
@@ -106,10 +106,10 @@ export const postPackTC = (cardsPack: PostPackPayloadType): AppThunkType => (dis
             dispatch(isLoadingAC(false))
         })
 }
-export const deletePackTC = (id: string): AppThunkType => (dispatch) => {
+export const deleteCardTC = (id: string, cardsPack_id: string): AppThunkType => (dispatch) => {
     isLoadingAC(true)
-    packsApi.deletePack(id).then(() => {
-        dispatch(getPacksTC())
+    cardsApi.deleteCard(id).then(() => {
+        dispatch(getCardsTC(cardsPack_id))
     })
         .catch((err: AxiosError) => {
             handleServerAppError(err, dispatch)
@@ -118,6 +118,8 @@ export const deletePackTC = (id: string): AppThunkType => (dispatch) => {
             dispatch(isLoadingAC(false))
         })
 }
+
+/*
 export const updatePackTC = (cardsPack: UpdatePackPayloadType): AppThunkType => (dispatch) => {
     isLoadingAC(true)
     packsApi.updatePack(cardsPack).then(() => {

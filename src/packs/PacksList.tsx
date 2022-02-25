@@ -1,10 +1,11 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {
-    changeisMineStatusAC,
     deletePackTC,
     getPacksTC,
     PacksType,
-    postPackTC, setCurrentPageAC, setPageCountAC,
+    postPackTC,
+    setCurrentPageAC,
+    setPageCountAC,
     setSearchValueAC,
     updatePackTC
 } from "./packs-reducer";
@@ -20,23 +21,30 @@ import {Navigate} from 'react-router-dom';
 import ConfigurationPanel from "./ConfigurationPanel/ConfigurationPanel";
 import {PATH} from "../pages/AllRoutes";
 import debounce from "lodash.debounce";
-import MyCheckbox from "../common/Checkbox/MyCheckbox";
+import Modal from "../common/Modal/Modal";
 
 export const PacksList = () => {
     const dispatch = useDispatch()
     const packs = useSelector<RootStateType, PacksType>(state => state.packs)
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuth)
+    const [active, setActive] = useState(false)
+    const [name, setName] = useState('')
 
     const userId = ''
     useEffect(() => {
-
         dispatch(getPacksTC(userId))
     }, [packs.page, packs.pageCount, packs.searchValue])
 
+    const openModalWindow = () => {
+        setActive(true)
+    }
+    const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+       setName(e.currentTarget.value)
+    }
     const addNewPack = () => {
-        const name = 'zhenya'
         dispatch(postPackTC({name}))
+        setActive(false)
     }
     const deletePack = (id: string) => {
         dispatch(deletePackTC(id))
@@ -69,12 +77,14 @@ export const PacksList = () => {
     }
     return (
         <div className={s.container}>
+            <Modal active={active} setActive={setActive} addNewPack={addNewPack}>{<div className={s.modalWindow}>
+                <MyInput onChange={onChangeName}/><MyButton onClick={addNewPack}>Add</MyButton></div>}</Modal>
             <ConfigurationPanel/>
             <div className={s.rightPart}>
                 <h1>Packs list</h1>
                 <div className={s.rightTopPart}>
                     <MyInput name={'search'} onChange={debouncedChangeHandler}/>
-                    <MyButton disabled={isLoading} onClick={addNewPack}>Add new pack</MyButton>
+                    <MyButton disabled={isLoading} onClick={openModalWindow}>Add new pack</MyButton>
                 </div>
                 <table className={s.table}>
                     <tbody className={s.table_titles}>
