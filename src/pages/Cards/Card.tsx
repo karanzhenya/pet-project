@@ -27,9 +27,6 @@ const Card = ({updated, question, answer, grade, id, deleteCard}: CardPropsType)
             </tr>
             </tbody>
             <button onClick={deleteCardHandler}>x</button>
-            {/*
-            <MyButton disabled={isLoading} style={{width: "20"}} red onClick={handleDeletePack}>X</MyButton>
-            <MyButton disabled={isLoading} onClick={handleUpdatePack}>Update</MyButton>*/}
         </>
     );
 }

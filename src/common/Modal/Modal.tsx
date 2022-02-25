@@ -3,7 +3,6 @@ import './ModalStyle.css';
 
 type ModalType = {
     active: boolean
-    addNewPack: (name: string) => void
     setActive: (activeStatus: boolean) => void
     children: React.ReactChild | React.ReactNode
 }

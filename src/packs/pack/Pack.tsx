@@ -1,9 +1,9 @@
-import React from 'react';
-import MyButton from "../../common/Button/MyButton";
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootStateType} from "../../BLL/store";
 import s from '../PacksList.module.css'
+import ModalUpdatePack from "../../common/Modal/ModalUpdatePack";
 
 type PackPropsType = {
     name: string
@@ -13,31 +13,38 @@ type PackPropsType = {
     id: string
     isLoading: boolean
     deletePack: (id: string) => void
-    updatePack: (id: string) => void
 }
 
-const Pack = ({name, cardsCount, updated, user_id, id, isLoading, updatePack, deletePack}: PackPropsType) => {
+const Pack = ({name, cardsCount, updated, user_id, id, isLoading, deletePack}: PackPropsType) => {
 
     const myId = useSelector<RootStateType, string>(state => state.login._id)
+    const [activeUpdatePack, setActiveUpdatePack] = useState(false)
 
+    const openModalWindow = () => {
+        setActiveUpdatePack(true)
+    }
     const handleDeletePack = () => {
         deletePack(id)
     }
-    const handleUpdatePack = () => {
-        updatePack(id)
-    }
     return (
         <>
+            <ModalUpdatePack active={activeUpdatePack} setActive={setActiveUpdatePack} id={id}/>
             <tbody>
             <tr className={s.description}>
-                <Link to={`cards/${id}`}><td>{name}</td></Link>
+                <Link to={`cards/${id}`}>
+                    <td>{name}</td>
+                </Link>
                 <td>{cardsCount}</td>
                 <td>{updated}</td>
                 <td>{user_id}</td>
             </tr>
             </tbody>
-            <div>{myId === user_id && <div><button disabled={isLoading} style={{width: "20"}} onClick={handleDeletePack}>X</button>
-                <button disabled={isLoading} onClick={handleUpdatePack}>Update</button></div>}</div>
+            <div>
+                {myId === user_id && <div>
+                    <button disabled={isLoading} style={{width: "20"}} onClick={handleDeletePack}>X</button>
+                    <button onClick={openModalWindow}>Update</button>
+                </div>}
+            </div>
 
         </>
     );

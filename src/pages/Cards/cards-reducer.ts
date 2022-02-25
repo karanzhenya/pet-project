@@ -68,6 +68,7 @@ export const cardsReducer = (state: CardsType = initialCardsState, action: Cards
 }
 
 const setCardsAC = (cards: CardsType) => {
+    debugger
     return ({type: 'cards/GET-CARDS', cards} as const)
 }
 export const setCurrentPageAC = (page: number) => {
