@@ -1,5 +1,6 @@
 import React from 'react';
 import MyButton from "../../common/Button/MyButton";
+import {Link} from "react-router-dom";
 
 type PackPropsType = {
     name: string
@@ -24,7 +25,7 @@ const Pack = ({name, cardsCount, updated, user_id, id, isLoading, updatePack, de
         <>
             <tbody>
             <tr>
-                <td>{name}</td>
+                <Link to={`cards/${id}`}><td>{name}</td></Link>
                 <td>{cardsCount}</td>
                 <td>{updated}</td>
                 <td>{user_id}</td>

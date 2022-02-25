@@ -1,101 +1,91 @@
 import {Dispatch} from "redux";
-import {isLoadingAC} from "../app/app-reducer";
-import {handleServerAppError} from "../utils/CatchError";
+import {isLoadingAC} from "../../app/app-reducer";
+import {handleServerAppError} from "../../utils/CatchError";
 import {AxiosError} from "axios";
-import {AppThunkType, RootActionsType, RootStateType} from "../BLL/store";
-import {packsApi, PostPackPayloadType, UpdatePackPayloadType} from "../api/packsApi";
+import {RootActionsType, RootStateType} from "../../BLL/store";
+import {cardsApi} from "../../api/cardsApi";
 
-export type PackType = {
-    cardsCount: number
-    created: string
+export type CardType = {
+    answer: string
+    question: string
+    cardsPack_id: string
     grade: number
-    more_id: string
-    name: string
-    path: string
-    private: boolean
-    rating: number
     shots: number
-    type: string
-    updated: string
     user_id: string
-    user_name: string
-    __v: number
+    created: string
+    updated: string
     _id: string
 }
-export type PacksType = {
-    cardPacks: PackType[]
-    cardPacksTotalCount: number
-    maxCardsCount: number
-    minCardsCount: number
+export type CardsType = {
+    cards: CardType[]
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
     page: number
     pageCount: number
+    packUserId: string
     searchValue: string
     isMine: boolean
 }
 
-const initialCardsState: PacksType = {
-    cardPacks: [],
-    cardPacksTotalCount: 0,
-    maxCardsCount: 0,
-    minCardsCount: 0,
+const initialCardsState: CardsType = {
+    cards: [],
+    cardsTotalCount: 0,
+    maxGrade: 5,
+    minGrade: 0,
     page: 1,
-    pageCount: 20,
+    pageCount: 10,
+    packUserId: '',
     searchValue: '',
     isMine: false
 }
 
 
-export type PacksActionsType =
-    ReturnType<typeof setPacksAC>
+export type CardsActionsType =
+    ReturnType<typeof setCardsAC>
     | ReturnType<typeof setCurrentPageAC>
     | ReturnType<typeof setPageCountAC>
     | ReturnType<typeof setSearchValueAC>
-    | ReturnType<typeof changeisMineStatusAC>
 
-export const packsReducer = (state: PacksType = initialCardsState, action: PacksActionsType) => {
+export const cardsReducer = (state: CardsType = initialCardsState, action: CardsActionsType) => {
     switch (action.type) {
-        case "packs/GET-CARDS": {
-            return {...state, ...action.packs}
+        case "cards/GET-CARDS": {
+            return {...state, ...action.cards}
         }
-        case "packs/SET-CURRENT-PAGE": {
+
+        case "cards/SET-CURRENT-PAGE": {
             return {...state, page: action.page}
         }
-        case "packs/SET-PAGE-COUNT": {
+        case "cards/SET-PAGE-COUNT": {
             return {...state, pageCount: action.pageCount}
         }
-        case "packs/SET-SEARCH-VALUE": {
+        case "cards/SET-SEARCH-VALUE": {
             return {...state, searchValue: action.searchName}
-        }
-        case "packs/CHANGE-ISMINE-STATUS": {
-            return {...state, isMine: action.status}
         }
         default:
             return state
     }
 }
 
-const setPacksAC = (packs: PacksType) => {
-    return ({type: 'packs/GET-CARDS', packs} as const)
+const setCardsAC = (cards: CardsType) => {
+    return ({type: 'cards/GET-CARDS', cards} as const)
 }
 export const setCurrentPageAC = (page: number) => {
-    return ({type: 'packs/SET-CURRENT-PAGE', page} as const)
+    return ({type: 'cards/SET-CURRENT-PAGE', page} as const)
 }
 export const setPageCountAC = (pageCount: number) => {
-    return ({type: 'packs/SET-PAGE-COUNT', pageCount} as const)
+    return ({type: 'cards/SET-PAGE-COUNT', pageCount} as const)
 }
 export const setSearchValueAC = (searchName: string) => {
-    return ({type: 'packs/SET-SEARCH-VALUE', searchName} as const)
-}
-export const changeisMineStatusAC = (status: boolean) => {
-    return ({type: 'packs/CHANGE-ISMINE-STATUS', status} as const)
+    return ({type: 'cards/SET-SEARCH-VALUE', searchName} as const)
 }
 
-export const getPacksTC = (id?: string) => (dispatch: Dispatch<RootActionsType>, getState: () => RootStateType) => {
-    const page = getState().packs.page
-    const pageCount = getState().packs.pageCount
-    const searchName = getState().packs.searchValue
-    packsApi.getPacks(page, pageCount, searchName, id).then((res) => {
-        dispatch(setPacksAC(res.data))
+export const getCardsTC = (id?: string) => (dispatch: Dispatch<RootActionsType>, getState: () => RootStateType) => {
+    const page = getState().cards.page
+    const pageCount = getState().cards.pageCount
+    const searchName = getState().cards.searchValue
+    cardsApi.getCards(page, pageCount, id).then((res) => {
+        dispatch(setCardsAC(res.data))
     })
         .catch((err: AxiosError) => {
             handleServerAppError(err, dispatch)
@@ -103,7 +93,7 @@ export const getPacksTC = (id?: string) => (dispatch: Dispatch<RootActionsType>,
         .finally(() => {
             dispatch(isLoadingAC(false))
         })
-}
+}/*
 export const postPackTC = (cardsPack: PostPackPayloadType): AppThunkType => (dispatch) => {
     isLoadingAC(true)
     packsApi.postPack(cardsPack).then(() => {
@@ -139,4 +129,4 @@ export const updatePackTC = (cardsPack: UpdatePackPayloadType): AppThunkType => 
         .finally(() => {
             dispatch(isLoadingAC(false))
         })
-}
+}*/

@@ -4,7 +4,7 @@ import {
     deletePackTC,
     getPacksTC,
     PacksType,
-    postPackTC,
+    postPackTC, setCurrentPageAC, setPageCountAC,
     setSearchValueAC,
     updatePackTC
 } from "./packs-reducer";
@@ -28,14 +28,11 @@ export const PacksList = () => {
     const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuth)
 
-    const searchValue = useSelector<RootStateType, string>(state => state.packs.searchValue)
-    const currentPage = useSelector<RootStateType, number>(state => state.packs.page)
-    const pageCount = useSelector<RootStateType, number>(state => state.packs.pageCount)
     const userId = ''
     useEffect(() => {
 
         dispatch(getPacksTC(userId))
-    }, [currentPage, pageCount, searchValue])
+    }, [packs.page, packs.pageCount, packs.searchValue])
 
     const addNewPack = () => {
         const name = 'zhenya'
@@ -51,11 +48,17 @@ export const PacksList = () => {
         }
         dispatch(updatePackTC(cardsPack))
     }
+    const changeCurrentPage = (page: number) => {
+        dispatch(setCurrentPageAC(page))
+    }
+    const changePageCount = (pageCount: number) => {
+        dispatch(setPageCountAC(pageCount))
+    }
 
     const onChangeSearchValue = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setSearchValueAC(e.target.value))
     }
-    const debouncedChangeHandler = useCallback(debounce(onChangeSearchValue, 400), [searchValue]);
+    const debouncedChangeHandler = useCallback(debounce(onChangeSearchValue, 400), [packs.searchValue]);
 
     if (isLoading) {
         return <Preloader/>
@@ -93,9 +96,11 @@ export const PacksList = () => {
                                                        deletePack={deletePack}/>)}
 
                 </table>
-                <Pagination pageCount={pageCount}
-                            currentPage={currentPage}
-                            cardPacksTotalCount={packs.cardPacksTotalCount}
+                <Pagination pageCount={packs.pageCount}
+                            currentPage={packs.page}
+                            totalCount={packs.cardPacksTotalCount}
+                            changeCurrentPage={changeCurrentPage}
+                            changePageCount={changePageCount}
                 />
             </div>
         </div>

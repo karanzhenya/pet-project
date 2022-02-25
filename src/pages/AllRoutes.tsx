@@ -8,6 +8,7 @@ import Page404 from "./Page404/Page404";
 import Common from "./Common";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import PacksList from "../packs/PacksList";
+import CardsList from "./Cards/CardsList";
 
 export const PATH = {
     LOGIN: '/login',
@@ -17,6 +18,7 @@ export const PATH = {
     PAGE_404: '/page404',
     PROFILE: '/profile',
     PACKS: '/packs',
+    CARDS: `/packs/cards/:id`,
     COMMON: '/common'
 }
 
@@ -31,9 +33,10 @@ const AllRoutes = () => {
                 <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
                 <Route path={PATH.PROFILE} element={<Profile/>}/>
                 <Route path={PATH.PACKS} element={<PacksList/>}/>
+                <Route path={PATH.CARDS} element={<CardsList/>}/>
                 <Route path={PATH.COMMON} element={<Common/>}/>
                 <Route path={PATH.PAGE_404} element={<Page404/>}/>
-                <Route path={'*'} element={<Navigate to={PATH.PAGE_404}/>}/>
+                {/*<Route path={'*'} element={<Navigate to={PATH.PAGE_404}/>}/>*/}
             </Routes>
         </>
     );

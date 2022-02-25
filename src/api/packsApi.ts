@@ -10,7 +10,7 @@ export type UpdatePackPayloadType = {
 
 export const packsApi = {
 
-    getCards(page: number, pageCount: number, name: string, id?: string) {
+    getPacks(page: number, pageCount: number, name: string, id?: string) {
         return instance.get(`cards/pack?page=${page}&pageCount=${pageCount}&packName=${name}&user_id=${id}`)
     },
     postPack(cardsPack: PostPackPayloadType) {

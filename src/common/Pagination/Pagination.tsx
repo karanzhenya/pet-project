@@ -1,28 +1,31 @@
 import React, {ChangeEvent} from 'react';
 import s from "./Pagination.module.css";
 import {useDispatch} from "react-redux";
-import {setCurrentPageAC, setPageCountAC} from "../../packs/packs-reducer";
+import {setCurrentPageAC} from "../../packs/packs-reducer";
 
 type PaginationPropsType = {
     pageCount: number
-    cardPacksTotalCount: number
+    totalCount: number
     currentPage: number
+    changeCurrentPage: (page: number) => void
+    changePageCount: (pageCount: number) => void
 }
 
 
 const Pagination = (props: PaginationPropsType) => {
+    debugger
     const dispatch = useDispatch()
     const pageCountValues = [5, 10, 20, 50]
 
     //create array of pages
-    let totalPacksPageCount = Math.ceil(props.cardPacksTotalCount / props.pageCount)
+    let totalPacksPageCount = Math.ceil(props.totalCount / props.pageCount)
     let pages = []
     for (let i = 1; i <= totalPacksPageCount; i++) {
         pages.push(i)
     }
     //set current page in local state and get packs of current page
     const getCurrentPagePacks = (currentPage: number) => {
-        dispatch(setCurrentPageAC(currentPage))
+        props.changeCurrentPage(currentPage)
     }
 
     // get pages within bounds
@@ -34,7 +37,7 @@ const Pagination = (props: PaginationPropsType) => {
     // decrease current page by one less
     const prevPage = () => {
         if (props.currentPage > 1) {
-            dispatch(setCurrentPageAC(props.currentPage - 1))
+            props.changeCurrentPage(props.currentPage - 1)
         }
     }
     const firstPage = () => {
@@ -43,20 +46,20 @@ const Pagination = (props: PaginationPropsType) => {
     // increase current page by one more
     const nextPage = () => {
         if (totalPacksPageCount > props.currentPage) {
-            dispatch(setCurrentPageAC(props.currentPage + 1))
+            props.changeCurrentPage(props.currentPage + 1)
         }
     }
     const lastPage = () => {
-        dispatch(setCurrentPageAC(totalPacksPageCount))
+        props.changeCurrentPage(totalPacksPageCount)
     }
     // select current page in <select>
     const changeCurrentPage = (e: ChangeEvent<HTMLSelectElement>) => {
-        dispatch(setCurrentPageAC(Number(e.currentTarget.value)))
+        props.changeCurrentPage(Number(e.currentTarget.value))
     }
     //select page count in <select>
     const onChangePageCount = (e: ChangeEvent<HTMLSelectElement>) => {
-        dispatch(setCurrentPageAC(1))
-        dispatch(setPageCountAC(Number(e.currentTarget.value)))
+        props.changeCurrentPage(1)
+        props.changePageCount(Number(e.currentTarget.value))
     }
     return (
         <div className={s.pagination}>
