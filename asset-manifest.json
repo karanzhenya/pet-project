@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/pet-project/static/css/main.64d8bb82.css",
-    "main.js": "/pet-project/static/js/main.50c6cc56.js",
+    "main.css": "/pet-project/static/css/main.9471b829.css",
+    "main.js": "/pet-project/static/js/main.5d531bcf.js",
     "static/media/page404.jpg": "/pet-project/static/media/page404.c1e640b3e430bcfa3538.jpg",
     "static/media/Шторм.gif": "/pet-project/static/media/Шторм.9eb7c247389ef950dc6d.gif",
     "index.html": "/pet-project/index.html",
-    "main.64d8bb82.css.map": "/pet-project/static/css/main.64d8bb82.css.map",
-    "main.50c6cc56.js.map": "/pet-project/static/js/main.50c6cc56.js.map"
+    "main.9471b829.css.map": "/pet-project/static/css/main.9471b829.css.map",
+    "main.5d531bcf.js.map": "/pet-project/static/js/main.5d531bcf.js.map"
   },
   "entrypoints": [
-    "static/css/main.64d8bb82.css",
-    "static/js/main.50c6cc56.js"
+    "static/css/main.9471b829.css",
+    "static/js/main.5d531bcf.js"
   ]
 }
