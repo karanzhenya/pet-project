@@ -1,9 +1,9 @@
 import {Dispatch} from "redux";
 import {isLoadingAC} from "../../app/app-reducer";
 import {handleServerAppError} from "../../utils/CatchError";
-import {AxiosError} from "axios";
+import {AxiosError, AxiosResponse} from "axios";
 import {AppThunkType, RootActionsType, RootStateType} from "../../BLL/store";
-import {cardsApi, PostNewCard} from "../../api/cardsApi";
+import {cardsApi, PostNewCard, UpdateCard} from "../../api/cardsApi";
 
 export type CardType = {
     answer: string
@@ -26,6 +26,7 @@ export type CardsType = {
     packUserId: string
     searchValue: string
     isMine: boolean
+    cardsPack_id: string
 }
 
 const initialCardsState: CardsType = {
@@ -37,7 +38,8 @@ const initialCardsState: CardsType = {
     pageCount: 10,
     packUserId: '',
     searchValue: '',
-    isMine: false
+    isMine: false,
+    cardsPack_id: ''
 }
 
 
@@ -46,6 +48,7 @@ export type CardsActionsType =
     | ReturnType<typeof setCurrentPageAC>
     | ReturnType<typeof setPageCountAC>
     | ReturnType<typeof setSearchValueAC>
+    | ReturnType<typeof setCardsPackIdAC>
 
 export const cardsReducer = (state: CardsType = initialCardsState, action: CardsActionsType) => {
     switch (action.type) {
@@ -62,6 +65,9 @@ export const cardsReducer = (state: CardsType = initialCardsState, action: Cards
         case "cards/SET-SEARCH-VALUE": {
             return {...state, searchValue: action.searchName}
         }
+        case "cards/GET-CARDS-PACK-ID": {
+            return {...state, cardsPack_id: action.cardsPack_id}
+        }
         default:
             return state
     }
@@ -69,6 +75,9 @@ export const cardsReducer = (state: CardsType = initialCardsState, action: Cards
 
 const setCardsAC = (cards: CardsType) => {
     return ({type: 'cards/GET-CARDS', cards} as const)
+}
+export const setCardsPackIdAC = (cardsPack_id: string) => {
+    return ({type: 'cards/GET-CARDS-PACK-ID', cardsPack_id} as const)
 }
 export const setCurrentPageAC = (page: number) => {
     return ({type: 'cards/SET-CURRENT-PAGE', page} as const)
@@ -83,8 +92,9 @@ export const setSearchValueAC = (searchName: string) => {
 export const getCardsTC = (id?: string) => (dispatch: Dispatch<RootActionsType>, getState: () => RootStateType) => {
     const page = getState().cards.page
     const pageCount = getState().cards.pageCount
-    const searchName = getState().cards.searchValue
-    cardsApi.getCards(page, pageCount, id).then((res) => {
+    const cardsPack_id = getState().cards.cardsPack_id
+    cardsApi.getCards(page, pageCount, id).then((res: AxiosResponse<CardsType>) => {
+        dispatch(setCardsPackIdAC(cardsPack_id))
         dispatch(setCardsAC(res.data))
     })
         .catch((err: AxiosError) => {
@@ -106,7 +116,8 @@ export const postCardTC = (newCard: PostNewCard): AppThunkType => (dispatch) => 
             dispatch(isLoadingAC(false))
         })
 }
-export const deleteCardTC = (id: string, cardsPack_id: string): AppThunkType => (dispatch) => {
+export const deleteCardTC = (id: string): AppThunkType => (dispatch, getState: () => RootStateType) => {
+    const cardsPack_id = getState().cards.cardsPack_id
     isLoadingAC(true)
     cardsApi.deleteCard(id).then(() => {
         dispatch(getCardsTC(cardsPack_id))
@@ -119,11 +130,11 @@ export const deleteCardTC = (id: string, cardsPack_id: string): AppThunkType => 
         })
 }
 
-/*
-export const updatePackTC = (cardsPack: UpdatePackPayloadType): AppThunkType => (dispatch) => {
+export const updateCardTC = (card: UpdateCard): AppThunkType => (dispatch, getState: () => RootStateType) => {
+    const cardsPack_id = getState().cards.cardsPack_id
     isLoadingAC(true)
-    packsApi.updatePack(cardsPack).then(() => {
-        dispatch(getPacksTC())
+    cardsApi.updateCard(card).then(() => {
+        dispatch(getCardsTC(cardsPack_id))
     })
         .catch((err: AxiosError) => {
             handleServerAppError(err, dispatch)
@@ -131,4 +142,4 @@ export const updatePackTC = (cardsPack: UpdatePackPayloadType): AppThunkType => 
         .finally(() => {
             dispatch(isLoadingAC(false))
         })
-}*/
+}

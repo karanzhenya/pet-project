@@ -8,7 +8,7 @@ import MyInput from "../common/Input/MyInput";
 import Pagination from "../common/Pagination/Pagination";
 import Pack from "./pack/Pack";
 import Preloader from "../utils/Preloader";
-import {Link, Navigate} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import ConfigurationPanel from "./ConfigurationPanel/ConfigurationPanel";
 import {PATH} from "../pages/AllRoutes";
 import debounce from "lodash.debounce";
@@ -58,9 +58,6 @@ export const PacksList = () => {
             <ConfigurationPanel/>
             <div className={s.rightPart}>
                 <h1>Packs list</h1>
-                <Link to={`cards/62151fe2b6f5370004679574`}>
-                    X
-                </Link>
                 <div className={s.rightTopPart}>
                     <MyInput name={'search'} onChange={debouncedChangeHandler}/>
                     <MyButton disabled={isLoading} onClick={openModalWindow}>Add new pack</MyButton>

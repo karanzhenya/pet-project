@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../BLL/store";
 import s from '../PacksList.module.css'
 import ModalUpdatePack from "../../common/Modal/ModalUpdatePack";
+import {setCardsPackIdAC} from "../../pages/Cards/cards-reducer";
 
 type PackPropsType = {
     name: string
@@ -17,8 +18,13 @@ type PackPropsType = {
 
 const Pack = ({name, cardsCount, updated, user_id, id, isLoading, deletePack}: PackPropsType) => {
 
+    const dispatch = useDispatch()
     const myId = useSelector<RootStateType, string>(state => state.login._id)
     const [activeUpdatePack, setActiveUpdatePack] = useState(false)
+
+    const onClickLinkHandler = (packId: string) => {
+        dispatch(setCardsPackIdAC(packId))
+    }
 
     const openModalWindow = () => {
         setActiveUpdatePack(true)
@@ -31,7 +37,7 @@ const Pack = ({name, cardsCount, updated, user_id, id, isLoading, deletePack}: P
             <ModalUpdatePack active={activeUpdatePack} setActive={setActiveUpdatePack} id={id}/>
             <tbody>
             <tr className={s.description}>
-                <Link to={`cards/${id}`}>
+                <Link to={`cards/${id}`} onClick={() => onClickLinkHandler(id)}>
                     <td>{name}</td>
                 </Link>
                 <td>{cardsCount}</td>

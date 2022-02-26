@@ -4,17 +4,20 @@ import s from "./CardsList.module.css";
 import Pagination from "../../common/Pagination/Pagination";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../BLL/store";
-import {CardsType, deleteCardTC, getCardsTC, setCurrentPageAC, setPageCountAC} from "./cards-reducer";
+import {CardsType, deleteCardTC, getCardsTC, setCurrentPageAC, setPageCountAC, updateCardTC} from "./cards-reducer";
 import Card from "./Card";
 import {useParams} from "react-router-dom";
 import Modal from "../../common/Modal/Modal";
 import ModalAddCard from "../../common/Modal/ModalAddCard";
 import MyButton from "../../common/Button/MyButton";
+import Preloader from "../../utils/Preloader";
+import ModalUpdateCard from "../../common/Modal/ModalUpdateCard";
 
 export const CardsList = () => {
 
     const dispatch = useDispatch()
     const cards = useSelector<RootStateType, CardsType>(state => state.cards)
+    const isLoading = useSelector<RootStateType, boolean>(state => state.app.isLoading)
     const {id} = useParams();
     const [activeDeleteCard, setActiveDeleteCard] = useState(false)
     const [activeAddCard, setActiveAddCard] = useState(false)
@@ -34,10 +37,14 @@ export const CardsList = () => {
     }
     const deleteCard = (id: string) => {
         setActiveDeleteCard(true)
-        dispatch(deleteCardTC(id, cards.cards[0].cardsPack_id))
+        dispatch(deleteCardTC(id))
+    }
+
+    if (isLoading) {
+        return <Preloader/>
     }
     return <div className={s.container}>
-        <ModalAddCard active={activeAddCard} setActive={setActiveAddCard} cardsPack_id={cards.cards[0].cardsPack_id}/>
+        <ModalAddCard active={activeAddCard} setActive={setActiveAddCard} cardsPack_id={cards.cardsPack_id}/>
         <Modal active={activeDeleteCard} setActive={setActiveDeleteCard}>{'Card removed'}</Modal>
         <MyInput placeholder={'Search'} name={'search'}/>
         <MyButton onClick={openModalWindow}>Add</MyButton>
@@ -56,6 +63,7 @@ export const CardsList = () => {
                                            answer={cp.answer}
                                            grade={cp.grade}
                                            id={cp._id}
+                                           cardsPack_id={cp.cardsPack_id}
                                            deleteCard={deleteCard}
             />)}
 

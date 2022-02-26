@@ -5,6 +5,10 @@ export type PostNewCard = {
     question: string
     answer: string
 }
+export type UpdateCard = {
+    _id: string
+    question: string
+}
 
 export const cardsApi = {
 
@@ -16,5 +20,8 @@ export const cardsApi = {
     },
     deleteCard(id: string) {
         return instance.delete(`cards/card?id=${id}`)
+    },
+    updateCard(card: UpdateCard) {
+        return instance.put(`cards/card`, {card})
     }
 }
