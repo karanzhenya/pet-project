@@ -2,7 +2,7 @@ import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {deletePackTC, getPacksTC, PacksType, setCurrentPageAC, setPageCountAC, setSearchValueAC} from "./packs-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../BLL/store";
-import s from './PacksList.module.css'
+import s from './PacksList.module.scss'
 import MyButton from "../common/Button/MyButton";
 import MyInput from "../common/Input/MyInput";
 import Pagination from "../common/Pagination/Pagination";
@@ -14,6 +14,7 @@ import {PATH} from "../pages/AllRoutes";
 import debounce from "lodash.debounce";
 import Modal from "../common/Modal/Modal";
 import ModalAddPack from "../common/Modal/ModalAddPack";
+import ModalUpdatePack from "../common/Modal/ModalUpdatePack";
 
 export const PacksList = () => {
     const dispatch = useDispatch()
@@ -22,12 +23,20 @@ export const PacksList = () => {
     const isAuth = useSelector<RootStateType, boolean>(state => state.app.isAuth)
     const [activeAddPack, setActiveAddPack] = useState(false)
     const [activeDeletePack, setActiveDeletePack] = useState(false)
+    const [activeUpdatePack, setActiveUpdatePack] = useState(false)
+    const [packId, setPackId] = useState('')
+
 
     useEffect(() => {
         dispatch(getPacksTC(''))
     }, [packs.page, packs.pageCount, packs.searchValue])
 
-    const openModalWindow = () => {
+    const openUpdateModalWindow = (id: string) => {
+        setPackId(id)
+        setActiveUpdatePack(true)
+    }
+
+    const openModalAddWindow = () => {
         setActiveAddPack(true)
     }
     const deletePack = (id: string) => {
@@ -54,14 +63,19 @@ export const PacksList = () => {
     return (
         <div className={s.container}>
             <ModalAddPack active={activeAddPack} setActive={setActiveAddPack}/>
+            <ModalUpdatePack active={activeUpdatePack} setActive={setActiveUpdatePack} id={packId}/>
             <Modal active={activeDeletePack} setActive={setActiveDeletePack}>{'Pack removed'}</Modal>
-            <ConfigurationPanel/>
-            <div className={s.rightPart}>
+            <div className={s.topPart}>
                 <h1>Packs list</h1>
-                <div className={s.rightTopPart}>
+                <div className={s.search}>
+                    <ConfigurationPanel/>
                     <MyInput name={'search'} onChange={debouncedChangeHandler}/>
-                    <MyButton disabled={isLoading} onClick={openModalWindow}>Add new pack</MyButton>
+                    <MyButton disabled={isLoading} onClick={openModalAddWindow} style={{marginLeft: "20px"}}>Add new
+                        pack</MyButton>
                 </div>
+
+            </div>
+            <div className={s.content}>
                 <table className={s.table}>
                     <tbody className={s.table_titles}>
                     <tr>
@@ -78,6 +92,7 @@ export const PacksList = () => {
                                                        user_id={cp.user_id}
                                                        id={cp._id}
                                                        isLoading={isLoading}
+                                                       getPackId={openUpdateModalWindow}
                                                        deletePack={deletePack}/>)}
 
                 </table>
@@ -89,8 +104,7 @@ export const PacksList = () => {
                 />
             </div>
         </div>
-
-    );
+    )
 }
 
 export default PacksList;

@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import s from './CardsList.module.css'
-import ModalUpdateCard from "../../common/Modal/ModalUpdateCard";
+import React from 'react';
+import s from './CardsList.module.scss'
+import TableCell from '@mui/material/TableCell';
 
 type CardPropsType = {
     question: string
@@ -10,31 +10,31 @@ type CardPropsType = {
     id: string
     cardsPack_id: string
     deleteCard: (id: string) => void
+    openUpdateModalWindow: (id: string) => void
 }
 
-const Card = ({updated, question, answer, grade, id, deleteCard}: CardPropsType) => {
+const Card = ({updated, question, answer, grade, id, deleteCard, openUpdateModalWindow}: CardPropsType) => {
 
-    const [activeUpdateCard, setActiveUpdateCard] = useState(false)
-    const openModalWindow = () => {
-        setActiveUpdateCard(true)
-    }
     const deleteCardHandler = () => {
         deleteCard(id)
     }
 
+    const updateCardHandler = () => {
+        openUpdateModalWindow(id)
+    }
+
     return (
         <>
-            <ModalUpdateCard active={activeUpdateCard} setActive={setActiveUpdateCard} id={id}/>
             <tbody>
             <tr className={s.card}>
-                <td>{question}</td>
-                <td>{answer}</td>
-                <td>{updated}</td>
-                <td>{grade}</td>
+                <TableCell align={"right"}>{question}</TableCell>
+                <TableCell align={"right"}>{answer}</TableCell>
+                <TableCell align={"right"}>{updated}</TableCell>
+                <TableCell align={"right"}>{grade}</TableCell>
             </tr>
             </tbody>
             <button onClick={deleteCardHandler}>x</button>
-            <button onClick={openModalWindow}>Edit</button>
+            <button onClick={updateCardHandler}>Edit</button>
         </>
     );
 }

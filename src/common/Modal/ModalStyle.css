@@ -40,3 +40,11 @@
 .img {
     width: 70%;
 }
+
+.modalWindow {
+    display: flex;
+}
+
+.modalWindow button {
+    margin-left: 30px;
+}

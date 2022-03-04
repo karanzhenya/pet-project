@@ -1,9 +1,9 @@
 import React, {ChangeEvent, useState} from 'react';
-import s from "../../packs/PacksList.module.css";
+import './ModalStyle.css';
 import MyInput from "../Input/MyInput";
 import MyButton from "../Button/MyButton";
 import Modal from "./Modal";
-import {postPackTC, updatePackTC} from "../../packs/packs-reducer";
+import {updatePackTC} from "../../packs/packs-reducer";
 import {useDispatch} from "react-redux";
 
 type ModalUpdatePropsType = {
@@ -30,9 +30,9 @@ function ModalUpdatePack({active, setActive, id}: ModalUpdatePropsType) {
     }
     return (
         <Modal active={active} setActive={setActive}>
-            {<div className={s.modalWindow}>
+            {<div className='modalWindow'>
                 <MyInput placeholder={'Enter name'} onChange={onChangeName}/>
-                <MyButton onClick={updatePack}>Add</MyButton>
+                <MyButton onClick={updatePack}>Update</MyButton>
             </div>}</Modal>
     );
 }

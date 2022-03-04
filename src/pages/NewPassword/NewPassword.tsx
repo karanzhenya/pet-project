@@ -8,6 +8,7 @@ import loading from "../../files/Шторм.gif"
 import {Link, useParams} from "react-router-dom";
 import {PATH} from "../AllRoutes";
 import {setErrorAC} from "../../app/app-reducer";
+import {forgotPasswordTC} from "./new-password-reducer";
 
 const NewPassword = () => {
 
@@ -20,7 +21,7 @@ const NewPassword = () => {
         dispatch(setErrorAC(''))
     }, [])
     const sentPassword = () => {
-        /*dispatch(setNewPasswordTC(newPassword))*/
+        dispatch(forgotPasswordTC(newPassword))
         setNewPassword('')
     }
     const handleNewPassword = (newPassword: string) => {

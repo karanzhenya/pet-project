@@ -37,9 +37,7 @@ const initialState = {
 export const loginReducer = (state: UserInitialStateType = initialState, action: LoginActionsType): UserInitialStateType => {
     switch (action.type) {
         case 'login/LOGIN': {
-            let stateCopy = {...state}
-            stateCopy = action.data
-            return stateCopy
+            return {...state, ...action.data}
         }
         case 'login/LOGOUT': {
             let stateCopy = {...state}

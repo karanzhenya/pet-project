@@ -1,6 +1,6 @@
 .header {
     display: flex;
-    width: 490px;
+    width: 100%;
     align-items: center;
     position: relative;
     font-family: Arial, sans-serif;

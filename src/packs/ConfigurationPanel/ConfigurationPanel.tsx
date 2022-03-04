@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import s from "../PacksList.module.css";
 import MyButton from "../../common/Button/MyButton";
 import {getPacksTC} from "../packs-reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -22,14 +21,9 @@ const ConfigurationPanel = () => {
         dispatch(getPacksTC(''))
     }
     return (
-        <div className={s.leftPart}>
-            Show packs cards
-            <div className={s.buttonContainer}>
-                <MyButton red={checkedMy} onClick={showMyPacks}>My</MyButton>
-                <MyButton red={checkedAll} onClick={showAllPacks}>All</MyButton>
-            </div>
-            Number of cards
-            <input type={"range"}/>
+        <div>
+            <MyButton red={checkedMy} onClick={showMyPacks}>My Cards</MyButton>
+            <MyButton red={checkedAll} onClick={showAllPacks}>All Cards</MyButton>
         </div>
     );
 }

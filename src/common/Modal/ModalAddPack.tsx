@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from 'react';
-import s from "../../packs/PacksList.module.css";
+import './ModalStyle.css';
 import MyInput from "../Input/MyInput";
 import MyButton from "../Button/MyButton";
 import Modal from "./Modal";
@@ -24,7 +24,7 @@ function ModalAddPack({active, setActive}: ModalAddPackPropsType) {
     }
     return (
         <Modal active={active} setActive={setActive}>
-            {<div className={s.modalWindow}>
+            {<div className='modalWindow'>
                 <MyInput placeholder={'Enter name'} onChange={onChangeName}/>
                 <MyButton onClick={addNewPack}>Add</MyButton>
             </div>}</Modal>
