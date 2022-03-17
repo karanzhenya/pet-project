@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {RootStateType} from "../../BLL/store";
+import {RootStateType} from "../../../BLL/store";
 import s from '../PacksList.module.scss'
-import {setCardsPackIdAC} from "../../pages/Cards/cards-reducer";
+import {setCardsPackIdAC} from "../../Cards/cards-reducer";
 import Button from "@mui/material/Button";
 import TableCell from "@mui/material/TableCell";
 

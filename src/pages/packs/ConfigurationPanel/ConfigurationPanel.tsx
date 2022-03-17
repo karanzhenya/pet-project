@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import MyButton from "../../common/Button/MyButton";
+import MyButton from "../../../common/Button/MyButton";
 import {getPacksTC} from "../packs-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {RootStateType} from "../../BLL/store";
+import {RootStateType} from "../../../BLL/store";
 
 const ConfigurationPanel = () => {
     const dispatch = useDispatch()

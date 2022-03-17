@@ -1,9 +1,9 @@
 import {Dispatch} from "redux";
-import {isLoadingAC} from "../app/app-reducer";
-import {handleServerAppError} from "../utils/CatchError";
+import {isLoadingAC} from "../../app/app-reducer";
+import {handleServerAppError} from "../../utils/CatchError";
 import {AxiosError} from "axios";
-import {AppThunkType, RootActionsType, RootStateType} from "../BLL/store";
-import {packsApi, PostPackPayloadType, UpdatePackPayloadType} from "../api/packsApi";
+import {AppThunkType, RootActionsType, RootStateType} from "../../BLL/store";
+import {packsApi, PostPackPayloadType, UpdatePackPayloadType} from "../../api/packsApi";
 
 export type PackType = {
     cardsCount: number

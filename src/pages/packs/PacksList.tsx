@@ -1,20 +1,20 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {deletePackTC, getPacksTC, PacksType, setCurrentPageAC, setPageCountAC, setSearchValueAC} from "./packs-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {RootStateType} from "../BLL/store";
+import {RootStateType} from "../../BLL/store";
 import s from './PacksList.module.scss'
-import MyButton from "../common/Button/MyButton";
-import MyInput from "../common/Input/MyInput";
-import Pagination from "../common/Pagination/Pagination";
+import MyButton from "../../common/Button/MyButton";
+import MyInput from "../../common/Input/MyInput";
+import Pagination from "../../common/Pagination/Pagination";
 import Pack from "./pack/Pack";
-import Preloader from "../utils/Preloader";
+import Preloader from "../../utils/Preloader";
 import {Navigate} from 'react-router-dom';
 import ConfigurationPanel from "./ConfigurationPanel/ConfigurationPanel";
-import {PATH} from "../pages/AllRoutes";
+import {PATH} from "../AllRoutes";
 import debounce from "lodash.debounce";
-import Modal from "../common/Modal/Modal";
-import ModalAddPack from "../common/Modal/ModalAddPack";
-import ModalUpdatePack from "../common/Modal/ModalUpdatePack";
+import Modal from "../../common/Modal/Modal";
+import ModalAddPack from "../../common/Modal/ModalAddPack";
+import ModalUpdatePack from "../../common/Modal/ModalUpdatePack";
 
 export const PacksList = () => {
     const dispatch = useDispatch()

@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import s from "./Pagination.module.css";
 import {useDispatch} from "react-redux";
-import {setCurrentPageAC} from "../../packs/packs-reducer";
+import {setCurrentPageAC} from "../../pages/packs/packs-reducer";
 
 type PaginationPropsType = {
     pageCount: number

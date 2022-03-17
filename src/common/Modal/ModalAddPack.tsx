@@ -3,7 +3,7 @@ import './ModalStyle.css';
 import MyInput from "../Input/MyInput";
 import MyButton from "../Button/MyButton";
 import Modal from "./Modal";
-import {postPackTC} from "../../packs/packs-reducer";
+import {postPackTC} from "../../pages/packs/packs-reducer";
 import {useDispatch} from "react-redux";
 
 type ModalAddPackPropsType = {

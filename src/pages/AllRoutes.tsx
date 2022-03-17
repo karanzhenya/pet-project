@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Login from "./Login/Login";
 import Registration from "./Registration/Registration";
 import NewPassword from "./NewPassword/NewPassword";
@@ -7,7 +7,7 @@ import Profile from "./Profile";
 import Page404 from "./Page404/Page404";
 import Common from "./Common";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
-import PacksList from "../packs/PacksList";
+import PacksList from "../pages/packs/PacksList";
 import CardsList from "./Cards/CardsList";
 
 export const PATH = {
